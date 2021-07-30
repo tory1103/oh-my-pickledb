@@ -42,5 +42,8 @@ Website<br>
 <a href="https://tory1103.github.io/oh-my-pickledb/docs.html">
 Documentation<br>
 </a>
+<a href="https://pypi.org/project/my-pickledb/">
+PyPi<br>
+</a>
 
 </p>
