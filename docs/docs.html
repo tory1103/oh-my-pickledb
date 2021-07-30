@@ -1,12 +1,11 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<link rel="shortcut icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
-<link rel="icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>pickleDB - simple key-value database</title>
-<style type="text/css">
+    <link rel="shortcut icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>pickleDB - simple key-value database</title>
+    <style type="text/css">
 .logo { width: 800px; margin: 40px auto; }
 .body { font-family: "helvetica"; width: 540px; margin: 40px auto; }
 img.c1 { position: absolute; top: 0; right: 0; border: 0; }
@@ -14,49 +13,52 @@ span.c2 { color: #8F5902 }
 span.c9 { color: #4E9A06 }
 a { color: #008000; border-bottom: 0px dotted white; text-decoration: none; }
 a:hover { color: #008000; border-bottom: 0px solid white; }
-</style>
+
+    </style>
 </head>
 <body>
 <div class="logo"><a href="index.html"><img src="logo.png" alt="pickleDB logo"></a></div>
 <div class="body">
 
-<h1>PickleDB Class Functions</h1>
-<p><code><span class="c2">load_as_str</span> </code> &rarr; Loads a saved database file as string <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">load_as_json</span> </code> &rarr; Loads a saved database file as json <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">load_as_bytes</span> </code> &rarr; Loads a saved database file as bytes <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">load</span> </code> &rarr; Loads a saved database file automatically <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">save_as_str</span> </code> &rarr; Saves database as string file <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">save_as_json</span> </code> &rarr; Saves database as json file <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">save_as_bytes</span> </code> &rarr; Saves database as bytes file <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">save</span> </code> &rarr; Saves database automatically <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">dump</span> </code> &rarr; Saves database automatically <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">convert_to_str</span> </code> &rarr; Converts database to string format <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">convert_to_json</span> </code> &rarr; Converts database to json format <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">convert_to_bytes</span> </code> &rarr; Converts database to bytes format <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Sets the value of a key<small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Sets the value of a key <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">get_value_by_key</span> <span class="c9">key</span></code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">get</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">encrypt</span></code> &rarr; Encrypts current database<small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">encrypt_and_save</span></code> &rarr; Encrypts current database and saves it<small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">decrypt</span> </code>&rarr; Decrypts current database with a token<small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">decrypt_and_save</span></code> &rarr; Decrypts current database and saves it<small><em> (available since 0.1)</em></small></p>
-<br>
-<p><code><span class="c2">save_token</span> </code>&rarr; Saves the encrypted_token as bytes format<small><em> (available since 0.1)</em></small></p>
-<p><code><span class="c2">load_token</span></code> &rarr; Loads a saved encrypted_token<small><em> (available since 0.1)</em></small></p>
+    <h1>PickleDB Class Functions</h1>
+    <p><code><span class="c2">load_as_str</span> </code> &rarr; Loads a saved database file as string <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">load_as_json</span> </code> &rarr; Loads a saved database file as json <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">load_as_bytes</span> </code> &rarr; Loads a saved database file as bytes <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">load</span> </code> &rarr; Loads a saved database file automatically <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">save_as_str</span> </code> &rarr; Saves database as string file <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">save_as_json</span> </code> &rarr; Saves database as json file <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">save_as_bytes</span> </code> &rarr; Saves database as bytes file <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">save</span> </code> &rarr; Saves database automatically <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">dump</span> </code> &rarr; Saves database automatically <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">convert_to_str</span> </code> &rarr; Converts database to string format <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">convert_to_json</span> </code> &rarr; Converts database to json format <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">convert_to_bytes</span> </code> &rarr; Converts database to bytes format <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Sets the value of a key<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Sets the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">get_value_by_key</span> <span class="c9">key</span></code> &rarr; Gets the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">get</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Gets the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">update</span></code> &rarr; Reloads database type <small><em> (available since 0.0.2)</em></small></p>
+    <br>
+    <p><code><span class="c2">encrypt</span></code> &rarr; Encrypts current database<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">encrypt_and_save</span></code> &rarr; Encrypts current database and saves it<small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">decrypt</span> </code>&rarr; Decrypts current database with a token<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">decrypt_and_save</span></code> &rarr; Decrypts current database and saves it<small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">save_token</span> </code>&rarr; Saves the encrypted_token as bytes format<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">load_token</span></code> &rarr; Loads a saved encrypted_token<small><em> (available since 0.0.1)</em></small></p>
 
-<br>
-<h1>Any troubles?</h1>
-<p>Create an <a href="https://github.com/tory1103/oh-my-pickledb/issues">issue on GitHub</a>.<br>Contact us: support@sertor.es</p>
+    <br>
+    <h1>Any troubles?</h1>
+    <p>Create an <a href="https://github.com/tory1103/oh-my-pickledb/issues">issue on GitHub</a>.<br>Contact us: support@sertor.es</p>
 </div>
 </body>
 </html>

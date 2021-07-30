@@ -54,15 +54,15 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="my_pickledb",
-    version="0.0.1",
+    version="0.0.2",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/tory1103/oh-my-pickledb",
+    url="https://tory1103.github.io/oh-my-pickledb/",
     project_urls={
-        "Website": "https://tory1103.github.io/oh-my-pickledb/",
+        "Website": "https://github.com/tory1103/oh-my-pickledb",
         "Documentation": "https://tory1103.github.io/oh-my-pickledb/docs.html",
         "Issues": "https://github.com/tory1103/oh-my-pickledb/issues",
     },
