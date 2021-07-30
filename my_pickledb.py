@@ -1,5 +1,5 @@
-from ast import literal_eval as json_decode
-from os.path import exists as file_exists
+import ast
+import os
 
 from cryptography.fernet import Fernet
 
@@ -88,6 +88,7 @@ class PickleDB:
         self.set = self.create_key_and_value
         self.get = self.get_value_by_key
         self.remove = self.remove_value_by_key
+        self.update = self.__update_database_type
 
     def load_as_str(self):
         """
@@ -96,7 +97,7 @@ class PickleDB:
         :return:
         """
 
-        if file_exists(self.location):
+        if os.path.exists(self.location):
             with open(self.location, "r") as database:
                 self.database = database.read()
                 self.__update_database_type()
@@ -114,7 +115,7 @@ class PickleDB:
         :return:
         """
         try:
-            if file_exists(self.location):
+            if os.path.exists(self.location):
                 from json import load
                 self.database = load(open(self.location, 'rt'))
                 self.__update_database_type()
@@ -133,7 +134,7 @@ class PickleDB:
 
         :return:
         """
-        if file_exists(self.location):
+        if os.path.exists(self.location):
             with open(self.location, "rb") as database:
                 self.database = database.read()
                 self.__update_database_type()
@@ -147,7 +148,7 @@ class PickleDB:
 
         :return:
         """
-        if not file_exists(self.location): return
+        if not os.path.exists(self.location): return
 
         try:
             self.load_as_json()
@@ -243,7 +244,7 @@ class PickleDB:
             self.convert_to_str()
 
         if self.database_type == str:
-            self.database = json_decode(self.database)
+            self.database = ast.literal_eval(self.database)
             self.__update_database_type()
 
     def convert_to_bytes(self):
@@ -296,17 +297,24 @@ class PickleDB:
 
         return value
 
-    def encrypt(self, use_token: bool = True):
+    def encrypt(self, use_token: bool = True, keep_type: bool = True):
         """
-        Encrypts current database and returns its encoded value and token as tuple
+        Encrypts current database and returns its encoded value as bytes
 
         :param use_token: True if you want to use self.encrypted_token (saved)
-        :return: tuple (encoded, token)
+        :param keep_type:
+        :return: bytes
         """
 
+        database_type = self.database_type if keep_type else None
+
         self.convert_to_bytes()
-        token = Fernet.generate_key() if not use_token or not self.encrypt_token else self.encrypt_token
-        return Fernet(token).encrypt(self.database), token
+
+        self.encrypt_token = Fernet.generate_key() if not use_token or not self.encrypt_token else self.encrypt_token
+        encryption = Fernet(self.encrypt_token).encrypt(self.database)
+
+        self.convert_to_json() if database_type == dict else self.convert_to_str() if database_type == str else self.convert_to_bytes() if database_type == bytes else None
+        return encryption
 
     def decrypt(self):
         """
@@ -338,7 +346,7 @@ class PickleDB:
         :return:
         """
 
-        if not file_exists(self.location) or not file_exists(f"{self.location}.token"): return
+        if not os.path.exists(self.location) or not os.path.exists(f"{self.location}.token"): return
         with open(f"{self.location}.token", "rb") as token: self.encrypt_token = token.read()
 
     def encrypt_and_save(self, save_token: bool = True, use_token: bool = True):
@@ -357,14 +365,10 @@ class PickleDB:
         :return:
         """
 
-        db = self.database
-
-        self.database, self.encrypt_token = self.encrypt(use_token)
+        self.database, self.encrypt_token = self.encrypt(use_token, False)
         self.save(True)
-        if save_token: self.save_token()
 
-        self.database = db
-        self.__update_database_type()
+        if save_token: self.save_token()
 
     def decrypt_and_save(self):
         """
