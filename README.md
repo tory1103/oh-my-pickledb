@@ -1,5 +1,5 @@
 # What is PickleDB
-PickleDB is a lightweight, fast, and simple database based on
+[PickleDB](https://github.com/patx/pickledb) is a lightweight, fast, and simple database based on
 [json](https://docs.python.org/3/library/json.html) module. And it's BSD licensed!
 
 ## Oh-My-PickleDB
