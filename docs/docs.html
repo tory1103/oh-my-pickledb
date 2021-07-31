@@ -4,20 +4,23 @@
     <link rel="shortcut icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
     <link rel="icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>pickleDB - simple key-value database</title>
+    <title>Oh-My-PickleDB - JSON Database</title>
     <style type="text/css">
-.logo { width: 800px; margin: 40px auto; }
-.body { font-family: "helvetica"; width: 540px; margin: 40px auto; }
+.logo { width: 740px; margin: 40px auto; }
+.body { font-family: "helvetica"; width: 640px; margin: 40px auto; text-align: center;}
 img.c1 { position: absolute; top: 0; right: 0; border: 0; }
 span.c2 { color: #8F5902 }
 span.c9 { color: #4E9A06 }
 a { color: #008000; border-bottom: 0px dotted white; text-decoration: none; }
 a:hover { color: #008000; border-bottom: 0px solid white; }
 
+
+
+
     </style>
 </head>
 <body>
-<div class="logo"><a href="index.html"><img src="logo.png" alt="pickleDB logo"></a></div>
+<div class="logo"><a href="index.html"><img src="logo.png" alt="logo"></a></div>
 <div class="body">
 
     <h1>PickleDB Class Functions</h1>
@@ -44,6 +47,13 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
     <br>
     <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
     <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">search_keys_by_value</span> <span class="c9">*args</span> <span class="c9">accurate_search</span></code> &rarr; Searchs for keys in args<small><em> (available since 0.0.3)</em></small></p>
+    <p><code><span class="c2">search_keys_by_key</span> <span class="c9">*args</span> </code> &rarr; Searchs for keys in args <small><em> (available since 0.0.3)</em></small></p>
+    <br>
+    <p><code><span class="c2">getall_keys</span></code> &rarr; Gets all saved keys <small><em> (available since 0.0.3)</em></small></p>
+    <p><code><span class="c2">getall_items</span></code> &rarr; Gets all saved items <small><em> (available since 0.0.3)</em></small></p>
+    <p><code><span class="c2">getall_values</span></code> &rarr; Gets all saved values <small><em> (available since 0.0.3)</em></small></p>
     <br>
     <p><code><span class="c2">update</span></code> &rarr; Reloads database type <small><em> (available since 0.0.2)</em></small></p>
     <br>
