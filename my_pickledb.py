@@ -8,11 +8,11 @@ class PickleDB:
 
     def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
         """
-        Creates a database object.
-        If load parameter is True, it will try to load the data from the location path.
-        If the file doesn´t exist, it will be created automatically.
+        Creates a database object
+        If load parameter is True, it will try to load the data from the location path
+        If the file doesn´t exist, it will be created automatically
 
-        If auto_dump parameter is True, it will try to save database after every update/query/change.
+        If auto_dump parameter is True, it will try to save database after every update/query/change
 
         :param location:
         :param load:
@@ -85,10 +85,15 @@ class PickleDB:
         """
 
         self.dump = self.save
+        self.update = self.__update_database_type
+
         self.set = self.create_key_and_value
         self.get = self.get_value_by_key
         self.remove = self.remove_value_by_key
-        self.update = self.__update_database_type
+
+        self.getall_keys = lambda: list(self.database.keys())
+        self.getall_items = lambda: list(self.database.items())
+        self.getall_values = lambda: list(self.database.values())
 
     def load_as_str(self):
         """
@@ -297,6 +302,44 @@ class PickleDB:
 
         return value
 
+    def search_keys_by_value(self, *args, accurate_search: bool = True):
+        """
+        Search for keys based on value
+        If accurate_search value is True, it will search only for same values, if False, it will also add keys with the search_value on it
+        It will return a list containing lists inside it with searched args
+
+        Example:
+            >>> database.search_keys_by_value("example_","exam")
+            >>> [
+                ['my_example_2', 'my_example_3'],
+                ['my_example', 'my_example_2', 'my_example_3']
+            ]
+
+        :param accurate_search:
+        :return:
+        """
+
+        find_values = lambda value: [key for key, val in self.database.items() if value == val or (value in val and not accurate_search)]
+        return [find_values(value) for value in args]
+
+    def search_keys_by_key(self, *args):
+        """
+        Search for keys if contained in args
+        It will return a list containing lists inside it with searched args
+
+        Example:
+            >>> database.search_keys_by_key("example_", "exam")
+            >>> [
+                ['my_example_2', 'my_example_3'],
+                ['my_example', 'my_example_2', 'my_example_3']
+            ]
+
+        :return: list
+        """
+
+        find_keys = lambda key: [k for k in self.database.keys() if key in k]
+        return [find_keys(key) for key in args]
+
     def encrypt(self, use_token: bool = True, keep_type: bool = True):
         """
         Encrypts current database and returns its encoded value as bytes
@@ -318,8 +361,8 @@ class PickleDB:
 
     def decrypt(self):
         """
-        Decrypts current crypted database.
-        It converts database into json when decrypted.
+        Decrypts current crypted database
+        It converts database into json when decrypted
 
         :return:
         """
@@ -351,16 +394,16 @@ class PickleDB:
 
     def encrypt_and_save(self, save_token: bool = True, use_token: bool = True):
         """
-        Save current database content on specified path with Fernet encoding.
-        It wont replace current database with the encoded one, it just save it encoded.
+        Save current database content on specified path with Fernet encoding
+        It wont replace current database with the encoded one, it just save it encoded
 
         Example:
-            database = {"test":"test"}
-            ecncoded_database = gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
+            >>> database = {"test":"test"}
+            >>> ecncoded_database = gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
 
-            file.db >> gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
+            >>> file.db >> gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
 
-        Database still the same type and value.
+        Database still the same type and value
 
         :return:
         """
@@ -372,8 +415,8 @@ class PickleDB:
 
     def decrypt_and_save(self):
         """
-        Save current database content on specified path with Fernet decoding.
-        It wont replace current database with the encoded one, it just save it encoded.
+        Save current database content on specified path with Fernet decoding
+        It wont replace current database with the encoded one, it just save it encoded
 
         Example:
             database = gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
@@ -381,7 +424,7 @@ class PickleDB:
 
             file.db >> {"test":"test"}
 
-        Database still the same type and value.
+        Database still the same type and value
 
         :return:
         """

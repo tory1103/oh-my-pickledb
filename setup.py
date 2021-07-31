@@ -54,7 +54,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="my_pickledb",
-    version="0.0.2",
+    version="0.0.3",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
