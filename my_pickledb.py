@@ -1,5 +1,6 @@
 import ast
 import os
+from collections import Counter
 
 from cryptography.fernet import Fernet
 
@@ -430,3 +431,65 @@ class PickleDB:
         """
         self.decrypt()
         self.save(True)
+
+
+class HopperDB(PickleDB):
+    def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
+        """
+        Creates a database object with statistics method
+        If load parameter is True, it will try to load the data from the location path
+        If the file doesn´t exist, it will be created automatically
+
+        If auto_dump parameter is True, it will try to save database after every update/query/change
+
+        :param location:
+        :param load:
+        :param auto_dump:
+        """
+        super().__init__(location=location, load=load, auto_dump=auto_dump)
+
+    def count_values(self):
+        """
+        Counts the values and the times used
+        Returns a dictionary with the values and times
+
+        If value type is 'unhashable type', it will be skipped
+
+        Example:
+            >>> pickledb.database = {"test": "1", "test2": "1", "test3": "2"}
+            >>> pickledb.count_values()
+            >>> {"1": 2, "2": 1}
+
+        :return: dict
+        """
+
+        return dict(Counter([value for value in self.database.values() if type(value) == str]))
+
+    def values_types(self):
+        """
+        Creates a dictionary with all values and its types
+
+        Example:
+            >>> pickledb.database = {"test": "1", "test2": ["1", "2"], "test3": {"2": "1"}}
+            >>> pickledb.values_types()
+            >>> {'test': <class 'str'>, 'test2': <class 'list'>, 'test3': <class 'dict'>}
+
+        :return:
+        """
+
+        return {key: type(value) for key, value in self.database.items()}
+
+    def count_values_types(self):
+        """
+        Counts the types of values and the times used
+        Returns a dictionary with the types and times
+
+        Example:
+            >>> values = {'test': <class 'str'>, 'test2': <class 'str'>, 'test3': <class 'dict'>}
+            >>> pickledb.count_values_types()
+            >>> {<class 'str'>: 2 ,<class 'dict'>: 1}
+
+        :return: dict
+        """
+
+        return dict(Counter(list(self.values_types().values())))
