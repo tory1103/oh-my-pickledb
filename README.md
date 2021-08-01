@@ -6,32 +6,37 @@
 Oh-My-PickleDB is an improved version of [PickleDB](https://github.com/patx/pickledb) with more database concepts than original one. Most important concepts are:
 
 * Cryptography module - Encrypt/Decrypt database content using [FERNET](https://cryptography.io/en/latest/fernet/) encoding
-* Code improvements - More readable documentation, improved code
+* Code improvements - More readable documentation, improved code...
+* Database Conversions - Works with bytes, json or str databases
+* More flexibility - Save/load database as bytes, json or str, you decide!
+* Statistics Tools - HopperDB works as a data analyzer
 
 ## Oh-My-PickleDB is fun and easy to use
 ```python
->> > from my_pickledb import PickleDB
+>>> from my_pickledb import PickleDB
 
->> > database = PickleDB("test.db", load=True, auto_dump=True)
+>>> database = PickleDB("test.db", load=True, auto_dump=True)
 
->> > db.set('key', 'value')
+>>> db.set('key', 'value')
 
->> > db.get('key')
->> > 'value'
+>>> db.get('key')
+>>> 'value'
 
->> > db.dump()
->> > True
+>>> db.dump()
+>>> True
 ```
 
 ## Easy to Install
 ```python
 # Using python pip
-$ pip install my_pickledb
+$ pip install my-pickledb
 ```
 
 ```python
 # Using git
 $ git clone https://github.com/tory1103/oh-my-pickledb.git
+$ cd oh-my-pickledb
+$ pip install -r requirements.txt
 ```
 
 <h3 align="right">Useful Links</h3>
