@@ -37,6 +37,7 @@ class PickleDB:
 
         :return: dict, str, bytes
         """
+
         return self.database
 
     def __getitem__(self, key: str):
@@ -46,6 +47,7 @@ class PickleDB:
         :param key:
         :return: str
         """
+
         return self.get_value_by_key(key)
 
     def __setitem__(self, key: str, new_value):
@@ -56,6 +58,7 @@ class PickleDB:
         :param new_value:
         :return:
         """
+
         return self.create_key_and_value(key, new_value)
 
     def __delitem__(self, key: str):
@@ -65,6 +68,7 @@ class PickleDB:
         :param key:
         :return:
         """
+
         return self.remove_value_by_key(key)
 
     def __update_database_type(self):
@@ -76,6 +80,7 @@ class PickleDB:
 
         :return:
         """
+
         self.database_type = type(self.database)
 
     def __setup_shortcuts(self):
@@ -89,8 +94,11 @@ class PickleDB:
         self.update = self.__update_database_type
 
         self.set = self.create_key_and_value
+        self.append = self.append_value_to_key
         self.get = self.get_value_by_key
         self.remove = self.remove_value_by_key
+        self.exists = lambda key: True if key in self.database else False
+        self.type = self.get_value_type_by_key
 
         self.getall_keys = lambda: list(self.database.keys())
         self.getall_items = lambda: list(self.database.items())
@@ -120,6 +128,7 @@ class PickleDB:
 
         :return:
         """
+
         try:
             if os.path.exists(self.location):
                 from json import load
@@ -140,6 +149,7 @@ class PickleDB:
 
         :return:
         """
+
         if os.path.exists(self.location):
             with open(self.location, "rb") as database:
                 self.database = database.read()
@@ -154,6 +164,7 @@ class PickleDB:
 
         :return:
         """
+
         if not os.path.exists(self.location): return
 
         try:
@@ -178,6 +189,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type != str: self.convert_to_str()
 
         with open(self.location, "w") as database:
@@ -189,6 +201,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type != dict: self.convert_to_json()
 
         from json import dump
@@ -200,6 +213,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type != bytes: self.convert_to_bytes()
 
         with open(self.location, "wb") as database:
@@ -213,6 +227,7 @@ class PickleDB:
         :param forcesave:
         :return:
         """
+
         if self.auto_save or forcesave:
             if self.database_type == dict:
                 self.save_as_json()
@@ -232,6 +247,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type == dict:
             self.database = str(self.database)
             self.__update_database_type()
@@ -246,6 +262,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type == bytes:
             self.convert_to_str()
 
@@ -259,6 +276,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.database_type == dict: self.convert_to_str()
 
         if self.database_type == str:
@@ -273,6 +291,7 @@ class PickleDB:
         :param args:
         :return:
         """
+
         self.database.update(
             {
                 key: args[0] if len(args) == 1 else list(args)
@@ -281,14 +300,48 @@ class PickleDB:
 
         self.save()
 
-    def get_value_by_key(self, key: str):
+    def append_value_to_key(self, key: str, *args):
+        """
+        Appends *args to current saved key
+        If key doesn´t exists, it will create it
+
+        Example:
+            >>> database.set("my_example", "value0")
+            >>> 'value0'
+
+            >>> database.append("my_example", "test")
+            >>> ['value0', 'test']
+
+
+        :param key:
+        :param args:
+        :return:
+        """
+
+        self.create_key_and_value(key, self.get_value_by_key(key), *args) if self.exists(key) else self.create_key_and_value(key, *args)
+
+    def get_value_by_key(self, key: str, default_value: str = None):
         """
         Gets database value by key
+        Default_value is returned if key doesnt exists
+
+        :param key:
+        :param default_value:
+        :return:
+        """
+
+        return self.database.get(key, default_value)
+
+    def get_value_type_by_key(self, key: str):
+        """
+        Gets database value by key
+        Default_value is returned if key doesnt exists
 
         :param key:
         :return:
         """
-        return self.database.get(key)
+
+        return type(self.get(key))
 
     def remove_value_by_key(self, key: str):
         """
@@ -320,8 +373,7 @@ class PickleDB:
         :return:
         """
 
-        find_values = lambda value: [key for key, val in self.database.items() if value == val or (value in val and not accurate_search)]
-        return [find_values(value) for value in args]
+        return [(lambda value: [key for key, val in self.database.items() if value == val or (value in val and not accurate_search)])(value) for value in args]
 
     def search_keys_by_key(self, *args):
         """
@@ -338,8 +390,7 @@ class PickleDB:
         :return: list
         """
 
-        find_keys = lambda key: [k for k in self.database.keys() if key in k]
-        return [find_keys(key) for key in args]
+        return [(lambda key: [k for k in self.database.keys() if key in k])(key) for key in args]
 
     def encrypt(self, use_token: bool = True, keep_type: bool = True):
         """
@@ -380,6 +431,7 @@ class PickleDB:
 
         :return:
         """
+
         if self.encrypt_token:
             with open(f"{self.location}.token", "wb") as token: token.write(self.encrypt_token)
 
@@ -429,6 +481,7 @@ class PickleDB:
 
         :return:
         """
+
         self.decrypt()
         self.save(True)
 
@@ -446,6 +499,7 @@ class HopperDB(PickleDB):
         :param load:
         :param auto_dump:
         """
+
         super().__init__(location=location, load=load, auto_dump=auto_dump)
 
     def count_values(self):
