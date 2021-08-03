@@ -1,4 +1,4 @@
-from my_pickledb import PickleDB
+from src.my_pickledb import PickleDB
 
 """
 
@@ -22,4 +22,3 @@ database.update()
 print(database())  # Original Database
 database.decrypt()
 print(database())
-

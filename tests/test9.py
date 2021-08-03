@@ -1,4 +1,4 @@
-from my_pickledb import PickleDB
+from src.my_pickledb import PickleDB
 
 """
 
@@ -23,7 +23,7 @@ database.set("my_example4", "value2", "cva")
 print(database.get("my_example"))
 database.append("my_exampledfdfdf", "test")
 
-assert database.exists("my_example") == "F"
+assert database.exists("my_example")
 
 print(database.get("my_example"))
 print(database())

@@ -1,4 +1,4 @@
-from my_pickledb import PickleDB
+from src.my_pickledb import PickleDB
 
 """
 
@@ -17,3 +17,7 @@ database = PickleDB("my-example.db", load=False)
 
 database.set("my_example", "value0")
 database.save(True)
+
+
+import os
+print(os.path.normpath(os.getcwd() + os.sep + os.pardir))
