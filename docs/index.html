@@ -27,25 +27,25 @@ a:hover { color: #008000; border-bottom: 1px solid #008000; }
     with the BSD three-clause license.
     <h1>Oh-My-PickleDB is fun</h1>
     <code>
-        <span class="c2">&gt;&gt;&gt;</span> <span class="c9">import</span> pickledb&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> <span class="c9">from</span> my_pickledb <span class="c9">import</span> PickleDB
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db = pickledb.load(<span class="c9">'example.db', False</span>)
+        <span class="c2">&gt;&gt;&gt;</span> db = PickleDB(<span class="c9">"test.db", load=True, auto_dump=True</span>)
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.set(<span class="c9">'key', 'value'</span>)&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> db.set(<span class="c9">'key', 'value'</span>)
         <br/>
-        <span class="c2">&gt;&gt;&gt;</span> True&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> True
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.get(<span class="c9">'key'</span>)&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> db.get(<span class="c9">'key'</span>)
         <br/>
-        <span class="c2">&gt;&gt;&gt;</span> value&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> value
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.dump()&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> db.dump()
         <br/>
-        <span class="c2">&gt;&gt;&gt;</span> True&#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205; &#8205;
+        <span class="c2">&gt;&gt;&gt;</span> True
     </code>
     <h1>Easy installation</h1>
     <code>
-        <span class="c2">$</span> pip install <span class="c9">my-pickledb</span><br>
+        <span class="c2">$</span> pip install <span class="c9">oh-my-pickledb</span><br>
         <span class="c2">$</span> git clone <span class="c9">https://github.com/tory1103/oh-my-pickledb.git</span>
     </code>
     <h1>Any troubles?</h1>

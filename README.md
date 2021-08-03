@@ -12,24 +12,25 @@ Oh-My-PickleDB is an improved version of [PickleDB](https://github.com/patx/pick
 * Statistics Tools - HopperDB works as a data analyzer
 
 ## Oh-My-PickleDB is fun and easy to use
+
 ```python
->>> from my_pickledb import PickleDB
+>> > from my_pickledb import PickleDB
 
->>> database = PickleDB("test.db", load=True, auto_dump=True)
+>> > database = PickleDB("test.db", load=True, auto_dump=True)
 
->>> db.set('key', 'value')
+>> > db.set('key', 'value')
 
->>> db.get('key')
->>> 'value'
+>> > db.get('key')
+>> > 'value'
 
->>> db.dump()
->>> True
+>> > db.dump()
+>> > True
 ```
 
 ## Easy to Install
 ```python
 # Using python pip
-$ pip install my-pickledb
+$ pip install oh-my-pickledb
 ```
 
 ```python
@@ -47,7 +48,7 @@ Website<br>
 <a href="https://tory1103.github.io/oh-my-pickledb/docs.html">
 Documentation<br>
 </a>
-<a href="https://pypi.org/project/my-pickledb/">
+<a href="https://pypi.org/project/oh-my-pickledb/">
 PyPi<br>
 </a>
 
