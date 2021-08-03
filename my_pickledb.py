@@ -1,6 +1,8 @@
 import ast
+import collections
 import os
-from collections import Counter
+import threading
+import time
 
 from cryptography.fernet import Fernet
 
@@ -97,6 +99,7 @@ class PickleDB:
         self.append = self.append_value_to_key
         self.get = self.get_value_by_key
         self.remove = self.remove_value_by_key
+        self.truncate = self.truncate_key
         self.exists = lambda key: True if key in self.database else False
         self.type = self.get_value_type_by_key
 
@@ -283,20 +286,36 @@ class PickleDB:
             self.database = bytes(self.database, encoding="utf-8")
             self.__update_database_type()
 
-    def create_key_and_value(self, key: str, *args):
+    def create_key_and_value(self, key: str, *args, expiration_time: int = None):
         """
         Creates a new key and value on database
+        If expiration_time is setted, it will wait expiration time in seconds
+        and then it will remove key from database
+
+        Example:
+            >>> database.set("test", "value", expiration_time=5)
+            >>> print(database.database)
+            >>> {"test": "value"}
+
+            # Sleeps 5 seconds and the removes it
+
+            >>> print(database.database)
+            >>> {}
 
         :param key:
         :param args:
+        :param expiration_time:
         :return:
         """
 
-        self.database.update(
-            {
-                key: args[0] if len(args) == 1 else list(args)
-            }
-        )
+        self.database.update({key: args[0] if len(args) == 1 else list(args)})
+
+        if expiration_time:
+            def remove_on_expiration():
+                time.sleep(expiration_time)
+                self.remove_value_by_key(key)
+
+            threading.Thread(target=remove_on_expiration).start()
 
         self.save()
 
@@ -355,6 +374,16 @@ class PickleDB:
         self.save()
 
         return value
+
+    def truncate_key(self, key: str):
+        """
+        Truncates a key value, this means, it removes key value but not key itself
+
+        :param key:
+        :return:
+        """
+
+        if self.exists(key): self.set(key, None)
 
     def search_keys_by_value(self, *args, accurate_search: bool = True):
         """
@@ -517,7 +546,7 @@ class HopperDB(PickleDB):
         :return: dict
         """
 
-        return dict(Counter([value for value in self.database.values() if type(value) == str]))
+        return dict(collections.Counter([value for value in self.database.values() if type(value) == str]))
 
     def values_types(self):
         """
@@ -546,4 +575,4 @@ class HopperDB(PickleDB):
         :return: dict
         """
 
-        return dict(Counter(list(self.values_types().values())))
+        return dict(collections.Counter(list(self.values_types().values())))
