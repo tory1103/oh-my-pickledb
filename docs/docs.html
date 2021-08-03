@@ -41,8 +41,8 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
     <p><code><span class="c2">convert_to_json</span> </code> &rarr; Converts database to json format <small><em> (available since 0.0.1)</em></small></p>
     <p><code><span class="c2">convert_to_bytes</span> </code> &rarr; Converts database to bytes format <small><em> (available since 0.0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Sets the value of a key<small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Sets the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key<small><em> (available since 0.0.6)</em></small></p>
+    <p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key <small><em> (available since 0.0.6)</em></small></p>
     <br>
     <p><code><span class="c2">append_value_to_key</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.0.5)</em></small></p>
     <p><code><span class="c2">append</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.0.5)</em></small></p>
@@ -55,6 +55,9 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
     <br>
     <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
     <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <br>
+    <p><code><span class="c2">truncate_key</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.0.6)</em></small></p>
+    <p><code><span class="c2">truncate</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.0.6)</em></small></p>
     <br>
     <p><code><span class="c2">exists</span> <span class="c9">key</span></code> &rarr; Determine if a key exists <small><em> (available since 0.0.5)</em></small></p>
     <br>
