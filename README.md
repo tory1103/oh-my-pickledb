@@ -40,6 +40,16 @@ $ cd oh-my-pickledb
 $ pip install -r requirements.txt
 ```
 
+## Contributing
+
+You can propose a feature request opening an issue or a pull request.
+
+Here is a list of oh-my-pickledb contributors:
+
+<a href="https://github.com/tory1103/oh-my-pickledb/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=tory1103/oh-my-pickledb" />
+</a>
+
 <h3 align="right">Useful Links</h3>
 <p align="right">
 <a href="https://tory1103.github.io/oh-my-pickledb/">
