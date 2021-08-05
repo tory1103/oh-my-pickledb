@@ -31,7 +31,7 @@ class PickleDB:
 
         if load: self.load()
 
-        self.__setup_shortcuts()
+        self.setup_shortcuts()
 
     def __call__(self):
         """
@@ -85,7 +85,7 @@ class PickleDB:
 
         self.database_type = type(self.database)
 
-    def __setup_shortcuts(self):
+    def setup_shortcuts(self):
         """
         Creates functions shortcuts
 
@@ -135,6 +135,7 @@ class PickleDB:
         try:
             if os.path.exists(self.location):
                 from json import load
+
                 self.database = load(open(self.location, 'rt'))
                 self.__update_database_type()
 
@@ -208,6 +209,7 @@ class PickleDB:
         if self.database_type != dict: self.convert_to_json()
 
         from json import dump
+
         dump(self.database, open(self.location, 'wt'))
 
     def save_as_bytes(self):
@@ -311,7 +313,7 @@ class PickleDB:
         self.database.update({key: args[0] if len(args) == 1 else list(args)})
 
         if expiration_time:
-            def remove_on_expiration():
+            def remove_on_expiration( ):
                 time.sleep(expiration_time)
                 self.remove_value_by_key(key)
 
