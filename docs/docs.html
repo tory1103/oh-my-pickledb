@@ -15,10 +15,6 @@ a { color: #008000; border-bottom: 0px dotted white; text-decoration: none; }
 a:hover { color: #008000; border-bottom: 0px solid white; }
 
 
-
-
-
-
     </style>
 </head>
 <body>
@@ -26,65 +22,68 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
 <div class="body">
 
     <h1>PickleDB Class Functions</h1>
-    <p><code><span class="c2">load_as_str</span> </code> &rarr; Loads a saved database file as string <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">load_as_json</span> </code> &rarr; Loads a saved database file as json <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">load_as_bytes</span> </code> &rarr; Loads a saved database file as bytes <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">load</span> </code> &rarr; Loads a saved database file automatically <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">load_as_str</span> </code> &rarr; Loads a saved database file as string <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">load_as_json</span> </code> &rarr; Loads a saved database file as json <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">load_as_bytes</span> </code> &rarr; Loads a saved database file as bytes <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">load</span> </code> &rarr; Loads a saved database file automatically <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">save_as_str</span> </code> &rarr; Saves database as string file <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">save_as_json</span> </code> &rarr; Saves database as json file <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">save_as_bytes</span> </code> &rarr; Saves database as bytes file <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">save</span> </code> &rarr; Saves database automatically <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">dump</span> </code> &rarr; Saves database automatically <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">save_as_str</span> </code> &rarr; Saves database as string file <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">save_as_json</span> </code> &rarr; Saves database as json file <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">save_as_bytes</span> </code> &rarr; Saves database as bytes file <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">save</span> </code> &rarr; Saves database automatically <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">dump</span> </code> &rarr; Saves database automatically <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">convert_to_str</span> </code> &rarr; Converts database to string format <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">convert_to_json</span> </code> &rarr; Converts database to json format <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">convert_to_bytes</span> </code> &rarr; Converts database to bytes format <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">convert_to_str</span> </code> &rarr; Converts database to string format <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">convert_to_json</span> </code> &rarr; Converts database to json format <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">convert_to_bytes</span> </code> &rarr; Converts database to bytes format <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key<small><em> (available since 0.0.6)</em></small></p>
-    <p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key <small><em> (available since 0.0.6)</em></small></p>
+    <p><code><span class="c2">create_key_and_value</span> <span class="c9">key</span> <span class="c9">*args</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key<small><em> (available since 0.1.1)</em></small></p>
+    <p><code><span class="c2">set</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">expiration_time</span></code> &rarr; Sets the value of a key <small><em> (available since 0.1.1)</em></small></p>
     <br>
-    <p><code><span class="c2">append_value_to_key</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.0.5)</em></small></p>
-    <p><code><span class="c2">append</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.0.5)</em></small></p>
+    <p><code><span class="c2">append_value_to_key</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">append</span> <span class="c9">key</span> <span class="c9">*args</span> </code> &rarr; Appends *args to a key <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">get_value_by_key</span> <span class="c9">key</span> <span class="c9">default_value</span></code> &rarr; Gets the value of a key <small><em> (available since 0.0.5)</em></small></p>
-    <p><code><span class="c2">get</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">default_value</span> </code> &rarr; Gets the value of a key <small><em> (available since 0.0.5)</em></small></p>
+    <p><code><span class="c2">get_value_by_key</span> <span class="c9">key</span> <span class="c9">default_value</span></code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">get</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">default_value</span> </code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">get_value_type_by_key</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.0.5)</em></small></p>
-    <p><code><span class="c2">type</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.0.5)</em></small></p>
+    <p><code><span class="c2">get_value_type_by_key</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">type</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">truncate_key</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.0.6)</em></small></p>
-    <p><code><span class="c2">truncate</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.0.6)</em></small></p>
+    <p><code><span class="c2">truncate_key</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.1.1)</em></small></p>
+    <p><code><span class="c2">truncate</span> <span class="c9">key</span></code> &rarr; Removes key value but not key itself <small><em> (available since 0.1.1)</em></small></p>
     <br>
-    <p><code><span class="c2">exists</span> <span class="c9">key</span></code> &rarr; Determine if a key exists <small><em> (available since 0.0.5)</em></small></p>
+    <p><code><span class="c2">exists</span> <span class="c9">key</span></code> &rarr; Determine if a key exists <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">search_keys_by_value</span> <span class="c9">*args</span> <span class="c9">accurate_search</span></code> &rarr; Searchs for keys in args<small><em> (available since 0.0.3)</em></small></p>
-    <p><code><span class="c2">search_keys_by_key</span> <span class="c9">*args</span> </code> &rarr; Searchs for keys in args <small><em> (available since 0.0.3)</em></small></p>
+    <p><code><span class="c2">search_keys_by_value</span> <span class="c9">*args</span> <span class="c9">accurate_search</span></code> &rarr; Searchs for keys in args<small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">search_keys_by_key</span> <span class="c9">*args</span> </code> &rarr; Searchs for keys in args <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">getall_keys</span></code> &rarr; Gets all saved keys <small><em> (available since 0.0.3)</em></small></p>
-    <p><code><span class="c2">getall_items</span></code> &rarr; Gets all saved items <small><em> (available since 0.0.3)</em></small></p>
-    <p><code><span class="c2">getall_values</span></code> &rarr; Gets all saved values <small><em> (available since 0.0.3)</em></small></p>
+    <p><code><span class="c2">getall_keys</span></code> &rarr; Gets all saved keys <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">getall_items</span></code> &rarr; Gets all saved items <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">getall_values</span></code> &rarr; Gets all saved values <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">update</span></code> &rarr; Reloads database type <small><em> (available since 0.0.2)</em></small></p>
+    <p><code><span class="c2">update</span></code> &rarr; Reloads database type <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">encrypt</span></code> &rarr; Encrypts current database<small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">encrypt_and_save</span></code> &rarr; Encrypts current database and saves it<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">encrypt</span></code> &rarr; Encrypts current database<small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">encrypt_and_save</span></code> &rarr; Encrypts current database and saves it<small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">decrypt</span> </code>&rarr; Decrypts current database with a token<small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">decrypt_and_save</span></code> &rarr; Decrypts current database and saves it<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">decrypt</span> </code>&rarr; Decrypts current database with a token<small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">decrypt_and_save</span></code> &rarr; Decrypts current database and saves it<small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">save_token</span> </code>&rarr; Saves the encrypted_token as bytes format<small><em> (available since 0.0.1)</em></small></p>
-    <p><code><span class="c2">load_token</span></code> &rarr; Loads a saved encrypted_token<small><em> (available since 0.0.1)</em></small></p>
+    <p><code><span class="c2">save_token</span> </code>&rarr; Saves the encrypted_token as bytes format<small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">load_token</span></code> &rarr; Loads a saved encrypted_token<small><em> (available since 0.1)</em></small></p>
     <br>
     <h1>HopperDB Class Functions</h1>
-    <p><code><span class="c2">count_values</span> </code> &rarr; Counts the values and the times used <small><em> (available since 0.0.4)</em></small></p>
-    <p><code><span class="c2">values_types</span> </code> &rarr; Creates a dictionary with all values and its types <small><em> (available since 0.0.4)</em></small></p>
-    <p><code><span class="c2">count_values_types</span> </code> &rarr; Counts the types of values and the times used <small><em> (available since 0.0.4)</em></small></p>
+    <p><code><span class="c2">count_values</span> </code> &rarr; Counts the values and the times used <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">values_types</span> </code> &rarr; Creates a dictionary with all values and its types <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">count_values_types</span> </code> &rarr; Counts the types of values and the times used <small><em> (available since 0.1)</em></small></p>
 
     <br>
+    <h1>Looking for Frameworks?</h1>
+    <p>Check out our documentation about<a href="frameworks.html"> Frameworks</a>
+        <br>
     <h1>Any troubles?</h1>
     <p>Create an <a href="https://github.com/tory1103/oh-my-pickledb/issues">issue on GitHub</a>.<br>Contact us: support@sertor.es</p>
 </div>
