@@ -74,7 +74,7 @@ setuptools.setup(
     ],
     py_modules=["my_pickledb", "my_frameworks"],
     package_dir={"": "src"},
-    install_requires=["cryptography==3.1.1"],
+    install_requires=["cryptography==3.3.2"],
     python_requires=">=3.6",
     keywords='python, json, database, key-value, python3, datastore, fernet, encryption-decryption, fernet-encryption',
 )
