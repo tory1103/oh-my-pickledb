@@ -1,39 +1,55 @@
 """
 # What is PickleDB
-PickleDB is a lightweight, fast, and simple database based on
-[json](https://docs.python.org/3/library/json.html) module. And it's BSD licensed!
+
+[PickleDB](https://github.com/patx/pickledb) is a lightweight, fast, and simple database based on
+[json](https://docs.python.org/3/library/json.html) module. It's BSD licensed!
 
 ## Oh-My-PickleDB
+
 Oh-My-PickleDB is an improved version of [PickleDB](https://github.com/patx/pickledb) with more database concepts than original one. Most important concepts are:
 
 * Cryptography module - Encrypt/Decrypt database content using [FERNET](https://cryptography.io/en/latest/fernet/) encoding
-* Code improvements - More readable documentation, improved code
+* Code improvements - More readable documentation, improved code, etc...
+* Database Conversions - Works with bytes, json or str databases
+* More flexibility - Save/load database as bytes, json or str, you decide!
+* Statistics Tools - HopperDB works as a data analyzer
+* Frameworks - Pre-defined databases like UsersDB, ProductsDB, etc...
 
 ## Oh-My-PickleDB is fun and easy to use
+
 ```python
->> > from my_pickledb import PickleDB
+from my_pickledb import PickleDB
 
->> > database = PickleDB("test.db", load=True, auto_dump=True)
+database = PickleDB("test.db", load=True, auto_dump=True)  # PickleDB object
 
->> > db.set('key', 'value')
-
->> > db.get('key')
->> > 'value'
-
->> > db.dump()
->> > True
+db.set('key', 'value')  # Creates new key and value
+db.get('key')  # Must return 'value'
+db.dump()  # Must save database to file on specified path
 ```
 
 ## Easy to Install
-```python
+
+```shell
 # Using python pip
-$ pip install my_pickledb
+$ pip install oh-my-pickledb
 ```
 
-```python
+```shell
 # Using git
 $ git clone https://github.com/tory1103/oh-my-pickledb.git
+$ cd oh-my-pickledb
+$ pip install -r requirements.txt
 ```
+
+## Contributing
+
+You can propose a feature request opening an issue, or a pull request.
+
+Here is a list of oh-my-pickledb contributors:
+
+<a href="https://github.com/tory1103/oh-my-pickledb/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=tory1103/oh-my-pickledb" />
+</a>
 
 <h3 align="right">Useful Links</h3>
 <p align="right">
@@ -42,6 +58,9 @@ Website<br>
 </a>
 <a href="https://tory1103.github.io/oh-my-pickledb/docs.html">
 Documentation<br>
+</a>
+<a href="https://pypi.org/project/oh-my-pickledb/">
+PyPi<br>
 </a>
 
 </p>
@@ -54,7 +73,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="oh-my-pickledb",
-    version="0.2",
+    version="0.2.1",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
