@@ -310,7 +310,7 @@ class PickleDB:
         :return:
         """
 
-        self.database.update({key: args[0] if len(args) == 1 else list(args)})
+        self.database.update({key: args[0] if len(args) == 1 else [*args] if type(self.get_value_by_key(key)) == list else [*args]})
 
         if expiration_time:
             def remove_on_expiration( ):
