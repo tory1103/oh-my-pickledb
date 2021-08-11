@@ -38,6 +38,7 @@ $ pip install oh-my-pickledb
 $ git clone https://github.com/tory1103/oh-my-pickledb.git
 $ cd oh-my-pickledb
 $ pip install -r requirements.txt
+$ python setup.py install
 ```
 
 ## Contributing
