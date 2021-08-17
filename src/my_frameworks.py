@@ -5,7 +5,7 @@ class FrameworkDBScheme(my_pickledb.PickleDB):
     def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
         super().__init__(location=location, load=load, auto_dump=auto_dump)
 
-        self.current_id = max([self.database.get(key, 0).get("id", 0) for key in self.getall_keys()]) if load and len(self.getall_keys()) >= 1 else 0
+        self.current_id = max([self.database.get(key, 0).get("id", 0) for key in self.getall_keys()]) + 1 if load and len(self.getall_keys()) >= 1 else 0
 
         self.setup_shortcuts()
 
