@@ -73,7 +73,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="oh-my-pickledb",
-    version="0.2.3.2",
+    version="0.2.4",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
@@ -91,7 +91,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Database",
     ],
-    py_modules=["my_pickledb", "my_frameworks"],
+    packages=["my_pickledb"],
     package_dir={"": "src"},
     install_requires=["cryptography>=3.3.2"],
     python_requires=">=3.6",
