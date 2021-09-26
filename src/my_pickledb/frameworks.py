@@ -1,15 +1,19 @@
-from .pickledb import PickleDB
+import threading
+import time
+
+from .pickledb import PickleDB, isDictionary
 
 
 class FrameworkDBScheme(PickleDB):
-    def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
-        super().__init__(location=location, load=load, auto_dump=auto_dump)
+    def __init__(self, location: str, load: bool = True, auto_dump: bool = False, **kwargs):
+        super().__init__(location=location, load=load, auto_dump=auto_dump, **kwargs)
 
-        if self.database_type != dict and self.encrypt_token: self.decrypt()
+        if not isDictionary(self.database) and self.encrypt_token: self.decrypt()
 
-        self.current_id = max([self.database.get(key, 0).get("id", 0) for key in self.getall_keys()]) + 1 if load and len(self.getall_keys()) >= 1 and self.database_type == dict else 0
+        self.current_id = max([self.database.get(key, 0).get("id", 0) for key in self.getall_keys()]) + 1 if load and len(self.getall_keys()) >= 1 and isDictionary(self.database) else 0
 
-        self.setup_shortcuts()
+        self.set = self.create_key_and_value
+        self.append = self.append_value_to_key
 
     def get_current_id_and_sum(self):
         """
@@ -31,14 +35,15 @@ class FrameworkDBScheme(PickleDB):
         It will automatically add an id
 
         Example:
+            >>> database = FrameworkDBScheme("db.json")
             >>> database.set("identifier", {"test": "test"}, expiration_time=5)
             >>> print(database.database)
-            >>> {"identifier": {"id": 0, "test": "test"}}
+            {"identifier": {"id": 0, "test": "test"}}
 
             # Sleeps 5 seconds and the removes it
 
             >>> print(database.database)
-            >>> {}
+            {}
 
         :param identifier:
         :param data:
@@ -46,7 +51,7 @@ class FrameworkDBScheme(PickleDB):
         :return:
         """
 
-        if type(data) != dict: raise Exception("Dictionary type needed")
+        if not isDictionary(data): raise Exception("Dictionary type needed")
 
         if not self.exists(identifier): self.database.update({identifier: {"id": self.get_current_id_and_sum(), **data}})
         else: self.database.update({identifier: {"id": self.database.get(identifier)["id"], **data}})
@@ -66,10 +71,11 @@ class FrameworkDBScheme(PickleDB):
         If key doesn´t exists, it will create it
 
         Example:
+            >>> database = FrameworkDBScheme("db.json")
             >>> database.set("identifier", {"example_key": "test"})
 
             >>> database.append("identifier", {"example_key2": "test2"})
-            >>> {"identifier": {"example_key": "test", "example_key2": "test2"}}
+            {"identifier": {"example_key": "test", "example_key2": "test2"}}
 
 
         :param identifier:
@@ -87,14 +93,14 @@ class FrameworkDBScheme(PickleDB):
         It will return a list will all found identifiers
 
         Example:
-            >>> database = Frameworks.UsersDB("my-example.db", load=False)
+            >>> database = UsersDB("my-example.db", load=False)
 
             >>> database.set("identifier0", {"example_key": "test"})
             >>> database.set("identifier1", {"example_key": "test1"})
             >>> database.set("identifier2", {"example_key": "test"})
 
             >>> print(database.search_by("example_key", "test"))
-            >>> ['identifier0', 'identifier2']
+            ['identifier0', 'identifier2']
 
         :param by:
         :param where_is:
@@ -111,7 +117,7 @@ class UsersDB(FrameworkDBScheme):
     Create your own class instead
     """
 
-    def __init__(self, location: str, load: bool = True, auto_dump: bool = False): super().__init__(location=location, load=load, auto_dump=auto_dump)
+    def __init__(self, location: str, load: bool = True, auto_dump: bool = False, **kwargs): super().__init__(location=location, load=load, auto_dump=auto_dump, **kwargs)
 
     def add_user(self, username: str, password: str, email: str, **options):
         """
@@ -155,7 +161,7 @@ class ProductsDB(FrameworkDBScheme):
     Create your own class instead
     """
 
-    def __init__(self, location: str, load: bool = True, auto_dump: bool = False): super().__init__(location=location, load=load, auto_dump=auto_dump)
+    def __init__(self, location: str, load: bool = True, auto_dump: bool = False, **kwargs): super().__init__(location=location, load=load, auto_dump=auto_dump, **kwargs)
 
     def add_product(self, product: str, price: str, **options):
         """

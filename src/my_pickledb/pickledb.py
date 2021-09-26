@@ -4,34 +4,45 @@ import os
 import threading
 import time
 
+from bs4 import BeautifulSoup
 from cryptography.fernet import Fernet
+
+from .datatypes import isDictionary, isBytes, isString
 
 
 class PickleDB:
-
-    def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
+    def __init__(self, location: str, load: bool = True, auto_save: bool = False, **kwargs):
         """
         Creates a database object
         If load parameter is True, it will try to load the data from the location path
         If the file doesn´t exist, it will be created automatically
 
-        If auto_dump parameter is True, it will try to save database after every update/query/change
+        If auto_save parameter is True, it will try to save database after every update/query/change
 
         :param location:
         :param load:
-        :param auto_dump:
+        :param auto_save:
         """
 
         self.location = location
-        self.auto_save = auto_dump
+        self.auto_save = auto_save
+        self.database = kwargs.get("database", {})
+        if load and not self.database: self.load()
+
         self.encrypt_token = bytes()
 
-        self.database = dict()
-        self.__update_database_type()
+        self.dump = self.save
+        self.set = self.create_key_and_value
+        self.append = self.append_value_to_key
+        self.get = self.get_value_by_key
+        self.remove = self.remove_value_by_key
+        self.truncate = self.truncate_key
+        self.exists = lambda key: key in self.database
+        self.type = self.get_value_type_by_key
 
-        if load: self.load()
-
-        self.setup_shortcuts()
+        self.getall_keys = lambda: list(self.database.keys())
+        self.getall_items = lambda: list(self.database.items())
+        self.getall_values = lambda: list(self.database.values())
 
     def __call__(self):
         """
@@ -73,40 +84,6 @@ class PickleDB:
 
         return self.remove_value_by_key(key)
 
-    def __update_database_type(self):
-        """
-        Updates database type:
-            - Str
-            - Dict
-            - Bytes
-
-        :return:
-        """
-
-        self.database_type = type(self.database)
-
-    def setup_shortcuts(self):
-        """
-        Creates functions shortcuts
-
-        :return:
-        """
-
-        self.dump = self.save
-        self.update = self.__update_database_type
-
-        self.set = self.create_key_and_value
-        self.append = self.append_value_to_key
-        self.get = self.get_value_by_key
-        self.remove = self.remove_value_by_key
-        self.truncate = self.truncate_key
-        self.exists = lambda key: True if key in self.database else False
-        self.type = self.get_value_type_by_key
-
-        self.getall_keys = lambda: list(self.database.keys())
-        self.getall_items = lambda: list(self.database.items())
-        self.getall_values = lambda: list(self.database.values())
-
     def load_as_str(self):
         """
         Loads database as string
@@ -114,16 +91,9 @@ class PickleDB:
         :return:
         """
 
-        if os.path.exists(self.location):
-            with open(self.location, "r") as database:
-                self.database = database.read()
-                self.__update_database_type()
+        if not os.path.exists(self.location): raise Exception("Database doesn´t exist")
 
-        else:
-            raise Exception("Database doesn´t exist")
-
-        self.__update_database_type()
-        return self.database
+        with open(self.location, "r") as database: self.database = database.read()
 
     def load_as_json(self):
         """
@@ -132,20 +102,14 @@ class PickleDB:
         :return:
         """
 
+        if not os.path.exists(self.location): raise Exception("Database doesn´t exist")
+
         try:
-            if os.path.exists(self.location):
-                from json import load
+            from json import load
 
-                self.database = load(open(self.location, 'rt'))
-                self.__update_database_type()
+            self.database = load(open(self.location, 'rt'))
 
-            else:
-                raise Exception("Database doesn´t exist")
-
-        except Exception as error:
-            raise error
-
-        self.__update_database_type()
+        except Exception as error: raise error
 
     def load_as_bytes(self):
         """
@@ -154,13 +118,9 @@ class PickleDB:
         :return:
         """
 
-        if os.path.exists(self.location):
-            with open(self.location, "rb") as database:
-                self.database = database.read()
-                self.__update_database_type()
+        if not os.path.exists(self.location): raise Exception("Database doesn´t exist")
 
-        else:
-            raise Exception("Database doesn´t exist")
+        with open(self.location, "rb") as database: self.database = database.read()
 
     def load(self):
         """
@@ -169,21 +129,14 @@ class PickleDB:
         :return:
         """
 
-        if not os.path.exists(self.location): return
+        if not os.path.exists(self.location): raise Exception("Database doesn´t exist")
 
-        try:
-            self.load_as_json()
-
+        try: self.load_as_json()
         except:
-            try:
-                self.load_as_bytes()
-
+            try: self.load_as_bytes()
             except:
-                try:
-                    self.load_as_str()
-
-                except:
-                    raise Exception("Unknown/Invalid database format")
+                try: self.load_as_str()
+                except: raise Exception("Unknown/Invalid database format")
 
         self.load_token()
 
@@ -194,10 +147,9 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type != str: self.convert_to_str()
+        if not isString(self.database): self.convert_to_str()
 
-        with open(self.location, "w") as database:
-            database.write(self.database)
+        with open(self.location, "w") as database: database.write(self.database)
 
     def save_as_json(self):
         """
@@ -206,7 +158,7 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type != dict: self.convert_to_json()
+        if not isDictionary(self.database): self.convert_to_json()
 
         from json import dump
 
@@ -219,10 +171,9 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type != bytes: self.convert_to_bytes()
+        if not isBytes(self.database): self.convert_to_bytes()
 
-        with open(self.location, "wb") as database:
-            database.write(self.database)
+        with open(self.location, "wb") as database: database.write(self.database)
 
     def save(self, forcesave: bool = False):
         """
@@ -234,17 +185,24 @@ class PickleDB:
         """
 
         if self.auto_save or forcesave:
-            if self.database_type == dict:
-                self.save_as_json()
+            if isDictionary(self.database): self.save_as_json()
 
-            elif self.database_type == str:
-                self.save_as_str()
+            elif isString(self.database): self.save_as_str()
 
-            elif self.database_type == bytes:
-                self.save_as_bytes()
+            elif isBytes(self.database): self.save_as_bytes()
 
-            else:
-                raise Exception("Unknown/Invalid database format")
+            else: raise Exception("Unknown/Invalid database format")
+
+    def export_as_xml(self, export_location: str):
+        """
+        Exports current database as XML Format
+
+        :param export_location:
+        :return:
+        """
+
+        self.convert_to_json()
+        Helpers.XML().export(self.database, export_location)
 
     def convert_to_str(self):
         """
@@ -253,13 +211,7 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type == dict:
-            self.database = str(self.database)
-            self.__update_database_type()
-
-        if self.database_type == bytes:
-            self.database = bytes.decode(self.database, "utf-8")
-            self.__update_database_type()
+        self.database = str(self.database) if isDictionary(self.database) else bytes.decode(self.database, "utf-8") if isBytes(self.database) else self.database
 
     def convert_to_json(self):
         """
@@ -268,12 +220,9 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type == bytes:
-            self.convert_to_str()
+        if isBytes(self.database): self.convert_to_str()
 
-        if self.database_type == str:
-            self.database = ast.literal_eval(self.database)
-            self.__update_database_type()
+        if isString(self.database): self.database = ast.literal_eval(self.database)
 
     def convert_to_bytes(self):
         """
@@ -282,11 +231,9 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type == dict: self.convert_to_str()
+        if isDictionary(self.database): self.convert_to_str()
 
-        if self.database_type == str:
-            self.database = bytes(self.database, encoding="utf-8")
-            self.__update_database_type()
+        if isString(self.database): self.database = bytes(self.database, encoding="utf-8")
 
     def create_key_and_value(self, key: str, *args, expiration_time: int = None):
         """
@@ -295,6 +242,7 @@ class PickleDB:
         and then it will remove key from database
 
         Example:
+            >>> database = PickleDB("db.json")
             >>> database.set("test", "value", expiration_time=5)
             >>> print(database.database)
             >>> {"test": "value"}
@@ -327,6 +275,7 @@ class PickleDB:
         If key doesn´t exists, it will create it
 
         Example:
+            >>> database = PickleDB("db.json")
             >>> database.set("my_example", "value0")
             >>> 'value0'
 
@@ -340,6 +289,8 @@ class PickleDB:
         """
 
         self.create_key_and_value(key, self.get_value_by_key(key), *args) if self.exists(key) else self.create_key_and_value(key, *args)
+
+        self.save()
 
     def get_value_by_key(self, key: str, default_value: str = None):
         """
@@ -372,10 +323,9 @@ class PickleDB:
         :return:
         """
 
-        value = self.database.pop(key)
+        r = self.database.pop(key)
         self.save()
-
-        return value
+        return r
 
     def truncate_key(self, key: str):
         """
@@ -386,6 +336,7 @@ class PickleDB:
         """
 
         if self.exists(key): self.set(key, None)
+        self.save()
 
     def search_keys_by_value(self, *args, accurate_search: bool = True):
         """
@@ -394,6 +345,7 @@ class PickleDB:
         It will return a list containing lists inside it with searched args
 
         Example:
+            >>> database = PickleDB("db.json")
             >>> database.search_keys_by_value("example_","exam")
             >>> [
                 ['my_example_2', 'my_example_3'],
@@ -412,6 +364,7 @@ class PickleDB:
         It will return a list containing lists inside it with searched args
 
         Example:
+            >>> database = PickleDB("db.json")
             >>> database.search_keys_by_key("example_", "exam")
             >>> [
                 ['my_example_2', 'my_example_3'],
@@ -432,15 +385,36 @@ class PickleDB:
         :return: bytes
         """
 
-        database_type = self.database_type if keep_type else None
+        database_type = type(self.database) if keep_type else None
 
         self.convert_to_bytes()
 
         self.encrypt_token = Fernet.generate_key() if not use_token or not self.encrypt_token else self.encrypt_token
         encryption = Fernet(self.encrypt_token).encrypt(self.database)
 
-        self.convert_to_json() if database_type == dict else self.convert_to_str() if database_type == str else self.convert_to_bytes() if database_type == bytes else None
+        self.convert_to_json() if isDictionary(database_type) else self.convert_to_str() if isString(database_type) else self.convert_to_bytes() if isBytes(database_type) else None
         return encryption
+
+    def encrypt_and_save(self, save_token: bool = True, use_token: bool = True):
+        """
+        Save current database content on specified path with Fernet encoding
+        It wont replace current database with the encoded one, it just save it encoded
+
+        Example:
+            >>> database = {"test":"test"}
+            >>> encoded_database = b'gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q=='
+
+            << file.db >> b'gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==''
+
+        Database keeps the same type and value after enconding
+
+        :return:
+        """
+
+        self.database = self.encrypt(use_token, False)
+        self.save(True)
+
+        if save_token: self.save_token()
 
     def decrypt(self):
         """
@@ -450,21 +424,30 @@ class PickleDB:
         :return:
         """
 
-        if self.database_type != bytes: raise Exception("Database isn´t encrypted")
+        if not isBytes(self.database): raise Exception("Database isn´t encrypted")
         if not self.encrypt_token: raise Exception("Must have encrypted token")
 
         self.database = Fernet(self.encrypt_token).decrypt(self.database)
         self.convert_to_json()
 
-    def save_token(self):
+    def decrypt_and_save(self):
         """
-        Saves encrypt_token on file
+        Save current database content on specified path with Fernet decoding
+        It wont replace current database with the encoded one, it just save it encoded
+
+        Example:
+            >>> database = b'gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q=='
+            >>> decoded_database = {"test":"test"}
+
+            << file.db >> {"test":"test"}
+
+        Database is converted to json type
 
         :return:
         """
 
-        if self.encrypt_token:
-            with open(f"{self.location}.token", "wb") as token: token.write(self.encrypt_token)
+        self.decrypt()
+        self.save(True)
 
     def load_token(self):
         """
@@ -476,49 +459,19 @@ class PickleDB:
         if not os.path.exists(self.location) or not os.path.exists(f"{self.location}.token"): return
         with open(f"{self.location}.token", "rb") as token: self.encrypt_token = token.read()
 
-    def encrypt_and_save(self, save_token: bool = True, use_token: bool = True):
+    def save_token(self):
         """
-        Save current database content on specified path with Fernet encoding
-        It wont replace current database with the encoded one, it just save it encoded
-
-        Example:
-            >>> database = {"test":"test"}
-            >>> ecncoded_database = gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
-
-            >>> file.db >> gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
-
-        Database still the same type and value
+        Saves encrypt_token on file
 
         :return:
         """
 
-        self.database, self.encrypt_token = self.encrypt(use_token, False)
-        self.save(True)
-
-        if save_token: self.save_token()
-
-    def decrypt_and_save(self):
-        """
-        Save current database content on specified path with Fernet decoding
-        It wont replace current database with the encoded one, it just save it encoded
-
-        Example:
-            database = gAAAAABhBBN8KLRLIMpu2MpE2GWgGm843Pb9fTfYiHx6ZjYg1ANLOMdDxShrProag_9F73Lf86KLFycxw6u_t-wrzhbTT19O7Q==
-            dencoded_database = {"test":"test"}
-
-            file.db >> {"test":"test"}
-
-        Database still the same type and value
-
-        :return:
-        """
-
-        self.decrypt()
-        self.save(True)
+        if self.encrypt_token:
+            with open(f"{self.location}.token", "wb") as token: token.write(self.encrypt_token)
 
 
 class HopperDB(PickleDB):
-    def __init__(self, location: str, load: bool = True, auto_dump: bool = False):
+    def __init__(self, location: str, load: bool = True, auto_dump: bool = False, **kwargs):
         """
         Creates a database object with statistics method
         If load parameter is True, it will try to load the data from the location path
@@ -531,7 +484,7 @@ class HopperDB(PickleDB):
         :param auto_dump:
         """
 
-        super().__init__(location=location, load=load, auto_dump=auto_dump)
+        super().__init__(location=location, load=load, auto_dump=auto_dump, **kwargs)
 
     def count_values(self):
         """
@@ -541,9 +494,9 @@ class HopperDB(PickleDB):
         If value type is 'unhashable type', it will be skipped
 
         Example:
-            >>> pickledb.database = {"test": "1", "test2": "1", "test3": "2"}
-            >>> pickledb.count_values()
-            >>> {"1": 2, "2": 1}
+            >>> database = HopperDB("db.json", database={"test": "1", "test2": "1", "test3": "2"})
+            >>> database.count_values()
+            {"1": 2, "2": 1}
 
         :return: dict
         """
@@ -555,9 +508,9 @@ class HopperDB(PickleDB):
         Creates a dictionary with all values and its types
 
         Example:
-            >>> pickledb.database = {"test": "1", "test2": ["1", "2"], "test3": {"2": "1"}}
-            >>> pickledb.values_types()
-            >>> {'test': <class 'str'>, 'test2': <class 'list'>, 'test3': <class 'dict'>}
+            >>> database = HopperDB("db.json", database={"test": "1", "test2": ["1", "2"], "test3": {"2": "1"}})
+            >>> database.values_types()
+            {'test': <class 'str'>, 'test2': <class 'list'>, 'test3': <class 'dict'>}
 
         :return:
         """
@@ -570,11 +523,48 @@ class HopperDB(PickleDB):
         Returns a dictionary with the types and times
 
         Example:
-            >>> values = {'test': <class 'str'>, 'test2': <class 'str'>, 'test3': <class 'dict'>}
-            >>> pickledb.count_values_types()
-            >>> {<class 'str'>: 2 ,<class 'dict'>: 1}
+            >>> database = HopperDB("db.json", database={'test': <class 'str'>, 'test2': <class 'str'>, 'test3': <class 'dict'>})
+            >>> database.count_values_types()
+            {<class 'str'>: 2 ,<class 'dict'>: 1}
 
         :return: dict
         """
 
         return dict(collections.Counter(list(self.values_types().values())))
+
+
+class Helpers:
+    class XML:
+        def export(self, dictionary: dict, location: str):
+            """
+            Exports passed dictionary as XML Format
+
+            :param dictionary:
+            :param location:
+            :return:
+            """
+
+            with open(f"{location}.xml", "w") as exportation: exportation.write("".join([self.create_element(key, "".join([self.create_element(k, v) for k, v in value.items()]) if isDictionary(value) else value) for key, value in dictionary.items()]))
+
+        @staticmethod
+        def load(location: str):
+            """
+            Loads an XML File as BeautifuLSoup Object
+
+            :param location:
+            :return:
+            """
+
+            with open(location, 'r') as data: return BeautifulSoup(data.read(), "xml")
+
+        @staticmethod
+        def create_element(tag_name: str, tag_value):
+            """
+            Creates an XML Element ( <tag>value</tag> )
+
+            :param tag_name:
+            :param tag_value:
+            :return:
+            """
+
+            return "\n<{0}>{1}</{0}>\n".format(tag_name, tag_value)

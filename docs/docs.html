@@ -1,18 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html lang="en">
 <head>
-    <link rel="shortcut icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="http://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://packages.python.org/pickleDB/favicon.ico" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Oh-My-PickleDB - JSON Database</title>
     <style type="text/css">
 .logo { width: 740px; margin: 40px auto; }
-.body { font-family: "helvetica"; width: 640px; margin: 40px auto; text-align: center;}
-img.c1 { position: absolute; top: 0; right: 0; border: 0; }
+.body { font-family: "helvetica",serif; width: 640px; margin: 40px auto; text-align: center;}
+
 span.c2 { color: #8F5902 }
 span.c9 { color: #4E9A06 }
-a { color: #008000; border-bottom: 0px dotted white; text-decoration: none; }
-a:hover { color: #008000; border-bottom: 0px solid white; }
+a { color: #008000; border-bottom: 0 dotted white; text-decoration: none; }
+a:hover { color: #008000; border-bottom: 0 solid white; }
 
 
     </style>
@@ -46,8 +46,8 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
     <p><code><span class="c2">get_value_by_key</span> <span class="c9">key</span> <span class="c9">default_value</span></code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
     <p><code><span class="c2">get</span> <span class="c9">key</span> <span class="c9">value</span> <span class="c9">default_value</span> </code> &rarr; Gets the value of a key <small><em> (available since 0.1)</em></small></p>
     <br>
-    <p><code><span class="c2">get_value_type_by_key</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.1)</em></small></p>
-    <p><code><span class="c2">type</span> <span class="c9">key</span></code> &rarr; Gets the type of a value by key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">get_value_type_by_key</span> <span class="c9">key</span></code> &rarr; Gets the type of value by key <small><em> (available since 0.1)</em></small></p>
+    <p><code><span class="c2">type</span> <span class="c9">key</span></code> &rarr; Gets the type of value by key <small><em> (available since 0.1)</em></small></p>
     <br>
     <p><code><span class="c2">remove_value_by_key</span> <span class="c9">key</span></code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
     <p><code><span class="c2">remove</span> <span class="c9">key</span> <span class="c9">value</span> </code> &rarr; Removes the value of a key <small><em> (available since 0.1)</em></small></p>
@@ -79,6 +79,10 @@ a:hover { color: #008000; border-bottom: 0px solid white; }
     <p><code><span class="c2">count_values</span> </code> &rarr; Counts the values and the times used <small><em> (available since 0.1)</em></small></p>
     <p><code><span class="c2">values_types</span> </code> &rarr; Creates a dictionary with all values and its types <small><em> (available since 0.1)</em></small></p>
     <p><code><span class="c2">count_values_types</span> </code> &rarr; Counts the types of values and the times used <small><em> (available since 0.1)</em></small></p>
+    <h1>XML Helper Class</h1>
+    <p><code><span class="c2">export</span> <span class="c9">dictionary</span> <span class="c9">location</span></code> &rarr; Exports passed dictionary as XML Format <small><em> (available since 0.3)</em></small></p>
+    <p><code><span class="c2">load</span> <span class="c9">location</span></code> &rarr; Loads an XML File as BeautifuLSoup Object <small><em> (available since 0.3)</em></small></p>
+    <p><code><span class="c2">create_element</span> <span class="c9">tag_name</span> <span class="c9">tag_value</span></code> &rarr; Creates an XML Element <small><em> (available since 0.3)</em></small></p>
 
     <br>
     <h1>Looking for Frameworks?</h1>
