@@ -1,4 +1,2 @@
 cryptography~=3.4.8
-bs4~=0.0.1
-setuptools==58.1.0
-beautifulsoup4==4.10.0
+setuptools~=58.1.0

@@ -73,7 +73,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="oh-my-pickledb",
-    version="0.3",
+    version="0.3.1",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
@@ -93,7 +93,7 @@ setuptools.setup(
     ],
     packages=["my_pickledb"],
     package_dir={"": "src"},
-    install_requires=["cryptography~=3.4.8", "beautifulsoup4==4.10.0"],
+    install_requires=["cryptography~=3.4.8"],
     python_requires=">=3.6",
     keywords='python, json, database, key-value, python3, datastore, fernet, encryption-decryption, fernet-encryption',
 )

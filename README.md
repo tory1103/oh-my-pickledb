@@ -21,9 +21,9 @@ from my_pickledb import PickleDB
 
 database = PickleDB("test.db", load=True, auto_dump=True)  # PickleDB object
 
-db.set('key', 'value')  # Creates new key and value
-db.get('key')  # Must return 'value'
-db.dump()  # Must save database to file on specified path
+database.set('key', 'value')  # Creates new key and value
+database.get('key')  # Must return 'value'
+database.dump()  # Must save database to file on specified path
 ```
 
 ## Easy to Install
@@ -48,7 +48,7 @@ You can propose a feature request opening an issue, or a pull request.
 Here is a list of oh-my-pickledb contributors:
 
 <a href="https://github.com/tory1103/oh-my-pickledb/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=tory1103/oh-my-pickledb" />
+<img src="https://contributors-img.web.app/image?repo=tory1103/oh-my-pickledb"  alt=""/>
 </a>
 
 <h3 align="right">Useful Links</h3>
