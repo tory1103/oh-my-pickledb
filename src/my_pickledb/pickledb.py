@@ -4,10 +4,10 @@ import os
 import threading
 import time
 
-from bs4 import BeautifulSoup
 from cryptography.fernet import Fernet
 
 from .datatypes import isDictionary, isBytes, isString
+from .helpers import convert_json_to_xml
 
 
 class PickleDB:
@@ -202,7 +202,7 @@ class PickleDB:
         """
 
         self.convert_to_json()
-        Helpers.XML().export(self.database, export_location)
+        with open(export_location, "w") as xml: xml.write(convert_json_to_xml(self.database))
 
     def convert_to_str(self):
         """
@@ -531,40 +531,3 @@ class HopperDB(PickleDB):
         """
 
         return dict(collections.Counter(list(self.values_types().values())))
-
-
-class Helpers:
-    class XML:
-        def export(self, dictionary: dict, location: str):
-            """
-            Exports passed dictionary as XML Format
-
-            :param dictionary:
-            :param location:
-            :return:
-            """
-
-            with open(f"{location}.xml", "w") as exportation: exportation.write("".join([self.create_element(key, "".join([self.create_element(k, v) for k, v in value.items()]) if isDictionary(value) else value) for key, value in dictionary.items()]))
-
-        @staticmethod
-        def load(location: str):
-            """
-            Loads an XML File as BeautifuLSoup Object
-
-            :param location:
-            :return:
-            """
-
-            with open(location, 'r') as data: return BeautifulSoup(data.read(), "xml")
-
-        @staticmethod
-        def create_element(tag_name: str, tag_value):
-            """
-            Creates an XML Element ( <tag>value</tag> )
-
-            :param tag_name:
-            :param tag_value:
-            :return:
-            """
-
-            return "\n<{0}>{1}</{0}>\n".format(tag_name, tag_value)
