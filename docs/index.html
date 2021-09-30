@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html lang="en">
 <head>
     <link rel="shortcut icon" href="https://pythonhosted.org/pickleDB/favicon.ico" type="image/x-icon">
     <link rel="icon" href="https://pythonhosted.org/pickleDB/favicon.ico" type="image/x-icon">
@@ -8,8 +8,7 @@
 
     <style type="text/css">
 .logo { width: 800px; margin: 40px auto; }
-.body { font-family: "helvetica"; width: 540px; margin: 40px auto; text-align:center;}
-img.c1 { position: absolute; top: 0; right: 0; border: 0; }
+.body { font-family: "helvetica",serif; width: 540px; margin: 40px auto; text-align:center;}
 span.c2 { color: #8F5902 }
 span.c9 { color: #4E9A06 }
 a { color: #008000; border-bottom: 1px dotted #008000; text-decoration: none; }
@@ -23,13 +22,13 @@ a:hover { color: #008000; border-bottom: 1px solid #008000; }
     <h1>Welcome</h1>
     <strong>Oh-My-PickleDB is a lightweight and simple key-value store.</strong>
     It is built upon Python's <a href="https://docs.python.org/3/library/json.html">json</a>
-    module and was inspired by <a href="http://redis.io/">redis</a>. It is licensed
+    module and was inspired by <a href="https://redis.io/">redis</a>. It is licensed
     with the BSD three-clause license.
     <h1>Oh-My-PickleDB is fun</h1>
     <code>
         <span class="c2">&gt;&gt;&gt;</span> <span class="c9">from</span> my_pickledb <span class="c9">import</span> PickleDB
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db = PickleDB(<span class="c9">"test.db", load=True, auto_dump=True</span>)
+        <span class="c2">&gt;&gt;&gt;</span> db = PickleDB(<span class="c9">"test.db", **kwargs</span>)
         <br/><br/>
         <span class="c2">&gt;&gt;&gt;</span> db.set(<span class="c9">'key', 'value'</span>)
         <br/>
@@ -39,7 +38,7 @@ a:hover { color: #008000; border-bottom: 1px solid #008000; }
         <br/>
         <span class="c2">&gt;&gt;&gt;</span> value
         <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.dump()
+        <span class="c2">&gt;&gt;&gt;</span> db.save.as_json()
         <br/>
         <span class="c2">&gt;&gt;&gt;</span> True
     </code>
@@ -61,7 +60,7 @@ a:hover { color: #008000; border-bottom: 1px solid #008000; }
     <br/>
     <br/>
     <br>
-    <a href="https://github.com/tory1103/oh-my-pickledb"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/tory1103/oh-my-pickledb"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 </div>
 </body>
 </html>
