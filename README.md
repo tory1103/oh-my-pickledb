@@ -11,19 +11,18 @@ Oh-My-PickleDB is an improved version of [PickleDB](https://github.com/patx/pick
 * Code improvements - More readable documentation, improved code, etc...
 * Database Conversions - Works with bytes, json or str databases
 * More flexibility - Save/load database as bytes, json or str, you decide!
-* Statistics Tools - HopperDB works as a data analyzer
-* Frameworks - Pre-defined databases like UsersDB, ProductsDB, etc...
+* Utilities - Export dictionaries as XML
 
 ## Oh-My-PickleDB is fun and easy to use
 
 ```python
 from my_pickledb import PickleDB
 
-database = PickleDB("test.db", load=True, auto_dump=True)  # PickleDB object
+database = PickleDB("test.db")  # PickleDB object
 
 database.set('key', 'value')  # Creates new key and value
 database.get('key')  # Must return 'value'
-database.dump()  # Must save database to file on specified path
+database.save.as_json()  # Must save database to file on specified path
 ```
 
 ## Easy to Install
