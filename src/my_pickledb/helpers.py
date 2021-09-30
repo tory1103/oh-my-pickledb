@@ -1,39 +1,53 @@
-def create_xml_element(tag: str, value, **kwargs):
-    """
-    Creates an XML Element ( <tag>value</tag> )
-
-    :param tag:
-    :param value:
-    :return:
-    """
-
-    return f"""<{tag}>{value}</{kwargs.get("closetag", tag)}>"""
+import ast
+from typing import Union
 
 
-def convert_json_to_xml(dictionary: dict):
-    """
-    Converts json object to XML object
-    It returns an string object with XML code
-
-    :param dictionary:
-    :return:
-    """
-
-    return "".join([create_xml_element(tag, convert_json_to_xml(value) if type(value) == dict else value, closetag=tag.split()[0]) for tag, value in dictionary.items()])
+def isString(data) -> bool: return type(data) == str
 
 
-def convert_json_file_to_xml(file: str):
-    """
-    Converts json file object to XML object
-    It returns an string object with XML code
+def isInt(data) -> bool: return type(data) == int
 
-    :param file:
-    :return:
-    """
 
-    try:
-        from json import load
+def isFloat(data) -> bool: return type(data) == float
 
-        return convert_json_to_xml(load(open(file, 'rt')))
 
-    except Exception as error: raise error
+def isBytes(data) -> bool: return type(data) == bytes
+
+
+def isBool(data) -> bool: return type(data) == bool
+
+
+def isDictionary(data) -> bool: return type(data) == dict
+
+
+def isList(data) -> bool: return type(data) == list
+
+
+def isSet(data) -> bool: return type(data) == set
+
+
+def isTuple(data) -> bool: return type(data) == tuple
+
+
+def isJson(data) -> bool: return isDictionary(data) or isList(data) or isSet(data) or isTuple(data)
+
+
+def json_to_str(json: Union[dict, list, set, tuple]) -> str: return str(json) if isJson(json) else json
+
+
+def json_to_bytes(json: Union[dict, list, set, tuple]) -> bytes: return bytes(string, encoding="utf-8") if isString(string := json_to_str(json)) else string
+
+
+def json_to_xml(json: dict) -> str: return "".join(["""<{tag}>{value}</{closetag}>""".format(tag=tag, value=json_to_xml(value) if isDictionary(value) else value, closetag=tag.split()[0]) for tag, value in json.items()]) if isDictionary(json) else json_to_str(json)
+
+
+def str_to_bytes(string: str) -> bytes: return bytes(string, encoding="utf-8") if isString(string) else string
+
+
+def str_to_json(string: str) -> Union[dict, list, set, tuple]: return ast.literal_eval(string) if isString(string) else string
+
+
+def bytes_to_str(_bytes: bytes) -> str: return bytes.decode(_bytes, "utf-8") if isBytes(_bytes) else _bytes
+
+
+def bytes_to_json(_bytes: bytes) -> Union[dict, list, set, tuple]: return str_to_json(bytes_to_str(_bytes)) if isBytes(_bytes) else _bytes

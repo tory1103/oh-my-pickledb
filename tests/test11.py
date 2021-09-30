@@ -1,11 +1,12 @@
+from time import sleep
+
 from src.my_pickledb import PickleDB
 
 """
 
-Simple test to truncate a key
+Simple test to expire keys.
 Functions used:
-    .truncate() -> Removes key value but not key itself
-
+    .set() -> creates values
 
 Website: https://tory1103.github.io/oh-my-pickledb/
 Documentation: https://tory1103.github.io/oh-my-pickledb/docs.html
@@ -13,9 +14,9 @@ Issues: https://github.com/tory1103/oh-my-pickledb/issues
 
 """
 
-database = PickleDB("h.db", load=False)
-database.set("my_example", "value0")
+database = PickleDB("my-example.db")
+database.set("my_example", "value0", expiration_time=2)
+print(database)
 
-print(database.get("my_example"))
-database.truncate("my_example")
-print(database.get("my_example"))
+sleep(3)
+print(database)

@@ -1,12 +1,12 @@
-from src.my_pickledb import HopperDB
+from src.my_pickledb import PickleDB
 
 """
 
-Simple test to use HopperDB and its functions.
+Simple test to use exists function and append.
 Functions used:
-    .count_values() -> Counts the values and the times used
-    .values_types() -> Creates a dictionary with all values and its types
-    .count_values_types() -> Counts the types of values and the times used
+    .append() -> Appends values to a key
+    .exists() -> Determine if a key exists
+
 
 Website: https://tory1103.github.io/oh-my-pickledb/
 Documentation: https://tory1103.github.io/oh-my-pickledb/docs.html
@@ -14,12 +14,16 @@ Issues: https://github.com/tory1103/oh-my-pickledb/issues
 
 """
 
-database = HopperDB("h.db", load=False)
+database = PickleDB("my-example.db")
 database.set("my_example", "value0")
 database.set("my_example2", "value0")
 database.set("my_example3", "value1")
 database.set("my_example4", "value2", "cva")
 
-print(database.count_values())
-print(database.values_types())
-print(database.count_values_types())
+print(database.get("my_example"))
+database.append("my_example", "test")
+
+assert database.exists("my_example")
+
+print(database.get("my_example"))
+print(database)

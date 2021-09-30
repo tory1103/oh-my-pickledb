@@ -13,7 +13,7 @@ Issues: https://github.com/tory1103/oh-my-pickledb/issues
 
 """
 
-database = PickleDB("my-example.db", load=False)
+database = PickleDB("my-example.db")
 database.set("my_example", "value0")
 database.set("my_example_2", "value0")
 database.set("my_example_3", "value1")

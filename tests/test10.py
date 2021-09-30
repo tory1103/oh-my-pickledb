@@ -2,9 +2,9 @@ from src.my_pickledb import PickleDB
 
 """
 
-Simple test to get value type
+Simple test to truncate a key
 Functions used:
-    .type() -> Gets value type by key
+    .truncate() -> Removes key value but not key itself
 
 
 Website: https://tory1103.github.io/oh-my-pickledb/
@@ -13,9 +13,9 @@ Issues: https://github.com/tory1103/oh-my-pickledb/issues
 
 """
 
-database = PickleDB("h.db", load=False)
+database = PickleDB("my-example.db")
 database.set("my_example", "value0")
-database.set("my_example2", ["value0"])
-database.set("my_example3", {"value1": "1"})
 
-print(database.type("my_example"))
+print(database.get("my_example"))
+database.truncate("my_example")
+print(database.get("my_example"))

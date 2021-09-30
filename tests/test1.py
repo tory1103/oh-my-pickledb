@@ -13,11 +13,7 @@ Issues: https://github.com/tory1103/oh-my-pickledb/issues
 
 """
 
-database = PickleDB("my-example.db", load=False)
+database = PickleDB("my-example.db")
 
 database.set("my_example", "value0")
-database.save(True)
-
-
-import os
-print(os.path.normpath(os.getcwd() + os.sep + os.pardir))
+database.save.as_json()
