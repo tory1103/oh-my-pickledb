@@ -1,58 +1,6 @@
 from __future__ import annotations
 
-from .helpers import Union, isJson, json_to_xml, str_to_json, str_to_bytes
-
-
-class List(list):
-    """
-    PickleDB built-in mutable sequence object
-
-    List() -> New empty list
-    List(*args) -> New list initialized with the value singles in the args list.
-    For example:
-        List(1, 2) -> [1, 2]
-
-    If no argument is given, the constructor creates a new empty list.
-    """
-
-    def __init__(self, *args):
-        """
-        Creates a new custom list object for PickleDB
-
-        :param kwargs:
-        """
-
-        super().__init__(args)
-
-    @property
-    def str(self) -> str:
-        """
-        Converts self to string format
-
-        :return:
-        """
-
-        return repr(self)
-
-    @property
-    def json(self) -> list:
-        """
-        Converts self to json format
-
-        :return:
-        """
-
-        return str_to_json(self.str)
-
-    @property
-    def bytes(self) -> bytes:
-        """
-        Converts self to bytes format
-
-        :return:
-        """
-
-        return str_to_bytes(self.str)
+from .helpers import Union, isJson, isList, json_to_xml, str_to_json, str_to_bytes
 
 
 class Dictionary(dict):
@@ -122,7 +70,7 @@ class Dictionary(dict):
         If expiration_time is setted, it will wait expiration time in seconds
         and then it will remove key from self dictionary
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.set("test", "value", expiration_time=5)
@@ -152,12 +100,12 @@ class Dictionary(dict):
 
             Thread(target=remove_on_expiration).start()
 
-    def append(self, key: str, *args) -> None:
+    def append(self, key: str, *args, expiration_time: int = None) -> None:
         """
         Appends *args to current stored key
         If key doesn´t exists, it will create it
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.set("my_example", "value0")
@@ -169,10 +117,11 @@ class Dictionary(dict):
 
         :param key:
         :param args:
+        :param expiration_time:
         :return:
         """
 
-        self.set(key, self.get(key), *args) if self.exists(key) else self.set(key, *args)
+        self.set(key, self.get(key), *args, expiration_time=expiration_time) if self.exists(key) else self.set(key, *args, expiration_time=expiration_time)
 
     def type(self, key: str) -> type:
         """
@@ -201,7 +150,7 @@ class Dictionary(dict):
         If accurate_search value is True, it will search only for same values, if False, it will also add keys with the search_value on it
         It will return a list containing lists inside it with searched args
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.search_keys_by_value("example_","exam")
@@ -221,7 +170,7 @@ class Dictionary(dict):
         Search for keys if contained in args
         It will return a list containing lists inside it with searched args
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.search_keys_by_key("example_", "exam")
@@ -234,6 +183,93 @@ class Dictionary(dict):
         """
 
         return [(lambda key: [k for k in self.keys() if key in k])(key) for key in args]
+
+
+class List(list):
+    """
+    PickleDB built-in mutable sequence object
+
+    List() -> New empty list
+    List(*args) -> New list initialized with the value singles in the args list.
+    For example:
+        List(1, 2) -> [1, 2]
+
+    If no argument is given, the constructor creates a new empty list.
+    """
+
+    def __init__(self, *args):
+        """
+        Creates a new custom list object for PickleDB
+
+        :param args:
+        """
+
+        super().__init__(args)
+
+    @property
+    def str(self) -> str:
+        """
+        Converts self to string format
+
+        :return:
+        """
+
+        return repr(self)
+
+    @property
+    def json(self) -> list:
+        """
+        Converts self to json format
+
+        :return:
+        """
+
+        return str_to_json(self.str)
+
+    @property
+    def bytes(self) -> bytes:
+        """
+        Converts self to bytes format
+
+        :return:
+        """
+
+        return str_to_bytes(self.str)
+
+    def merge(self, *args):
+        """
+        Merges current list with passed args lists
+        It is an improved version of the .extend method
+        Accepts multiple list arguments, not just one
+
+        For example:
+            >>> lst = List("test", "test2")
+            >>> lst.merge(["my-example"], ["my-example2"])
+            >>> print(lst)
+            [ "test", "test2", "my-example", "my-example2" ]
+
+        :param args:
+        :return:
+        """
+
+        [self.extend(iterable) for iterable in args if isList(iterable)]
+
+    def including(self, obj: Union[List, list, set, tuple]):
+        """
+        Converts current list and object passed list to Dictionary object
+        It uses the zip method to convert to lists into an dictionary
+
+        For example:
+            >>> lst = List("test", "test2")
+            >>> returned = lst.including(["my-example", "my-example2"])
+            >>> print(returned)
+            {'test': 'my-example', 'test2': 'my-example2'}
+
+        :param obj:
+        :return:
+        """
+
+        return Dictionary(**{x: y for x, y in zip(self, obj)})
 
 
 class Save:
