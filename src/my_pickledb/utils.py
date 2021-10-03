@@ -3,76 +3,6 @@ from __future__ import annotations
 from .helpers import Union, isJson, isList, json_to_xml, str_to_json, str_to_bytes
 
 
-class List(list):
-    """
-    PickleDB built-in mutable sequence object
-
-    List() -> New empty list
-    List(*args) -> New list initialized with the value singles in the args list.
-    For example:
-        List(1, 2) -> [1, 2]
-
-    If no argument is given, the constructor creates a new empty list.
-    """
-
-    def __init__(self, *args):
-        """
-        Creates a new custom list object for PickleDB
-
-        :param kwargs:
-        """
-
-        super().__init__(args)
-
-    @property
-    def str(self) -> str:
-        """
-        Converts self to string format
-
-        :return:
-        """
-
-        return repr(self)
-
-    @property
-    def json(self) -> list:
-        """
-        Converts self to json format
-
-        :return:
-        """
-
-        return str_to_json(self.str)
-
-    @property
-    def bytes(self) -> bytes:
-        """
-        Converts self to bytes format
-
-        :return:
-        """
-
-        return str_to_bytes(self.str)
-
-    def merge(self, *args):
-        """
-        Merges current list with passed args lists
-        It is an improved version of the .extend method
-        Accepts multiple list arguments, not just one
-
-        For example:
-            >>> lst = List("test", "test2")
-            >>> lst.merge(["my-example"], ["my-example2"])
-            >>> print(lst)
-            [ "test", "test2", "my-example", "my-example2" ]
-
-        :param args:
-        :return:
-        """
-
-        [self.extend(iterable) for iterable in args if isList(iterable)]
-
-
 class Dictionary(dict):
     """
     PickleDB built-in mutable object
@@ -253,6 +183,93 @@ class Dictionary(dict):
         """
 
         return [(lambda key: [k for k in self.keys() if key in k])(key) for key in args]
+
+
+class List(list):
+    """
+    PickleDB built-in mutable sequence object
+
+    List() -> New empty list
+    List(*args) -> New list initialized with the value singles in the args list.
+    For example:
+        List(1, 2) -> [1, 2]
+
+    If no argument is given, the constructor creates a new empty list.
+    """
+
+    def __init__(self, *args):
+        """
+        Creates a new custom list object for PickleDB
+
+        :param args:
+        """
+
+        super().__init__(args)
+
+    @property
+    def str(self) -> str:
+        """
+        Converts self to string format
+
+        :return:
+        """
+
+        return repr(self)
+
+    @property
+    def json(self) -> list:
+        """
+        Converts self to json format
+
+        :return:
+        """
+
+        return str_to_json(self.str)
+
+    @property
+    def bytes(self) -> bytes:
+        """
+        Converts self to bytes format
+
+        :return:
+        """
+
+        return str_to_bytes(self.str)
+
+    def merge(self, *args):
+        """
+        Merges current list with passed args lists
+        It is an improved version of the .extend method
+        Accepts multiple list arguments, not just one
+
+        For example:
+            >>> lst = List("test", "test2")
+            >>> lst.merge(["my-example"], ["my-example2"])
+            >>> print(lst)
+            [ "test", "test2", "my-example", "my-example2" ]
+
+        :param args:
+        :return:
+        """
+
+        [self.extend(iterable) for iterable in args if isList(iterable)]
+
+    def including(self, obj: Union[List, list, set, tuple]):
+        """
+        Converts current list and object passed list to Dictionary object
+        It uses the zip method to convert to lists into an dictionary
+
+        For example:
+            >>> lst = List("test", "test2")
+            >>> returned = lst.including(["my-example", "my-example2"])
+            >>> print(returned)
+            {'test': 'my-example', 'test2': 'my-example2'}
+
+        :param obj:
+        :return:
+        """
+
+        return Dictionary(**{x: y for x, y in zip(self, obj)})
 
 
 class Save:
