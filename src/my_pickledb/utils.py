@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .helpers import Union, isJson, json_to_xml, str_to_json, str_to_bytes
+from .helpers import Union, isJson, isList, json_to_xml, str_to_json, str_to_bytes
 
 
 class List(list):
@@ -53,6 +53,24 @@ class List(list):
         """
 
         return str_to_bytes(self.str)
+
+    def merge(self, *args):
+        """
+        Merges current list with passed args lists
+        It is an improved version of the .extend method
+        Accepts multiple list arguments, not just one
+
+        For example:
+            >>> lst = List("test", "test2")
+            >>> lst.merge(["my-example"], ["my-example2"])
+            >>> print(lst)
+            [ "test", "test2", "my-example", "my-example2" ]
+
+        :param args:
+        :return:
+        """
+
+        [self.extend(iterable) for iterable in args if isList(iterable)]
 
 
 class Dictionary(dict):
@@ -122,7 +140,7 @@ class Dictionary(dict):
         If expiration_time is setted, it will wait expiration time in seconds
         and then it will remove key from self dictionary
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.set("test", "value", expiration_time=5)
@@ -152,12 +170,12 @@ class Dictionary(dict):
 
             Thread(target=remove_on_expiration).start()
 
-    def append(self, key: str, *args) -> None:
+    def append(self, key: str, *args, expiration_time: int = None) -> None:
         """
         Appends *args to current stored key
         If key doesn´t exists, it will create it
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.set("my_example", "value0")
@@ -169,10 +187,11 @@ class Dictionary(dict):
 
         :param key:
         :param args:
+        :param expiration_time:
         :return:
         """
 
-        self.set(key, self.get(key), *args) if self.exists(key) else self.set(key, *args)
+        self.set(key, self.get(key), *args, expiration_time=expiration_time) if self.exists(key) else self.set(key, *args, expiration_time=expiration_time)
 
     def type(self, key: str) -> type:
         """
@@ -201,7 +220,7 @@ class Dictionary(dict):
         If accurate_search value is True, it will search only for same values, if False, it will also add keys with the search_value on it
         It will return a list containing lists inside it with searched args
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.search_keys_by_value("example_","exam")
@@ -221,7 +240,7 @@ class Dictionary(dict):
         Search for keys if contained in args
         It will return a list containing lists inside it with searched args
 
-        Example:
+        For example:
             >>> from my_pickledb import PickleDB
             >>> database = PickleDB("db.json")
             >>> database.search_keys_by_key("example_", "exam")
