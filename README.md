@@ -14,31 +14,10 @@ Oh-My-PickleDB is an improved version of [PickleDB](https://github.com/patx/pick
 * Utilities - Export dictionaries as XML
 
 ## Oh-My-PickleDB is fun and easy to use
-
-```python
-from my_pickledb import PickleDB
-
-database = PickleDB("test.db")  # PickleDB object
-
-database.set('key', 'value')  # Creates new key and value
-database.get('key')  # Must return 'value'
-database.save.as_json()  # Must save database to file on specified path
-```
+![image](https://user-images.githubusercontent.com/37801773/136356604-33965cd3-aa32-4f0f-9f3f-94388a2de4fe.png)
 
 ## Easy to Install
-
-```shell
-# Using python pip
-$ pip install oh-my-pickledb
-```
-
-```shell
-# Using git
-$ git clone https://github.com/tory1103/oh-my-pickledb.git
-$ cd oh-my-pickledb
-$ pip install -r requirements.txt
-$ python setup.py install
-```
+![image](https://user-images.githubusercontent.com/37801773/136357057-20660d4d-5021-4af5-a40c-7a627b8911c5.png)
 
 ## Contributing
 
