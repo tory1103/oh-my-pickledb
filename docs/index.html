@@ -1,47 +1,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="https://pythonhosted.org/pickleDB/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="https://pythonhosted.org/pickleDB/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Oh-My-PickleDB - JSON Database</title>
 
     <style type="text/css">
-.logo { width: 800px; margin: 40px auto; }
-.body { font-family: "helvetica",serif; width: 540px; margin: 40px auto; text-align:center;}
+.logo { width: 800px; margin: 40px auto; text-align:center;}
+.body{ font-family: "helvetica",serif; width: 540px; margin: 40px auto; text-align:center;}
+body{background-color: #E2E2E2;}
 span.c2 { color: #8F5902 }
 span.c9 { color: #4E9A06 }
 a { color: #008000; border-bottom: 1px dotted #008000; text-decoration: none; }
-a:hover { color: #008000; border-bottom: 1px solid #008000; }
+a:hover { color: #008000; border-bottom: 1px solid #008000;}
 
     </style>
 </head>
 <body>
-<div class="logo"><img src="logo.png" alt="pickleDB logo"></div>
+<div class="logo"><img src="images/logo.png" alt="pickleDB logo"></div>
 <div class="body">
     <h1>Welcome</h1>
     <strong>Oh-My-PickleDB is a lightweight and simple key-value store.</strong>
     It is built upon Python's <a href="https://docs.python.org/3/library/json.html">json</a>
     module and was inspired by <a href="https://redis.io/">redis</a>. It is licensed
     with the BSD three-clause license.
-    <h1>Oh-My-PickleDB is fun</h1>
-    <code>
-        <span class="c2">&gt;&gt;&gt;</span> <span class="c9">from</span> my_pickledb <span class="c9">import</span> PickleDB
-        <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db = PickleDB(<span class="c9">"test.db", **kwargs</span>)
-        <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.set(<span class="c9">'key', 'value'</span>)
-        <br/>
-        <span class="c2">&gt;&gt;&gt;</span> True
-        <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.get(<span class="c9">'key'</span>)
-        <br/>
-        <span class="c2">&gt;&gt;&gt;</span> value
-        <br/><br/>
-        <span class="c2">&gt;&gt;&gt;</span> db.save.as_json()
-        <br/>
-        <span class="c2">&gt;&gt;&gt;</span> True
-    </code>
+    <h1>Usage example</h1>
+    <img src="images/code-example.svg" alt="code-example">
+
     <h1>Easy installation</h1>
     <code>
         <span class="c2">$</span> pip install <span class="c9">oh-my-pickledb</span><br>

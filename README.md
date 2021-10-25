@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://tory1103.github.io/oh-my-pickledb/" rel="noopener">
- <img src="docs/logo.png" alt="logo"></a>
+  <img src="docs/images/logo.png" alt="logo"></a>
 </p>
 
 <h3 align="center">OH-MY-PICKLEDB</h3>
