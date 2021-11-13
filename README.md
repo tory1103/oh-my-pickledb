@@ -101,7 +101,7 @@ from my_pickledb import *
 ## ✍️ Authors <a name = "authors"></a>
 - [@tory1103](https://github.com/tory1103) - Idea, Concept & Initial work
 
-See also the list of [contributors](https://github.com/tory1103/LKD/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/tory1103/oh-my-pickledb/contributors) who participated in this project.
 
 <p align="center">
   <a href="https://github.com/tory1103/oh-my-pickledb/graphs/contributors">
