@@ -1,3 +1,4 @@
 cryptography~=3.4.8
 setuptools~=58.1.0
 fire~=0.4.0
+pysem-converters==0.1
