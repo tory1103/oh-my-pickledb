@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from pysem_converters import isBytes, bytes_to_json, bytes_to_str
+from pysem_converters import isBytes, bytes_to_json, bytes_to_str, Union
 
 from .utils import Dictionary, Load, Save
 

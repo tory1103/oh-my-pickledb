@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .helpers import Union, isJson, isList, json_to_xml, str_to_json, str_to_bytes
+from pysem_converters import isJson, isList, json_to_xml, str_to_json, str_to_bytes, Union
 
 
 class Dictionary(dict):
@@ -236,7 +236,7 @@ class List(list):
 
         return str_to_bytes(self.str)
 
-    def merge(self, *args):
+    def merge(self, *args) -> None:
         """
         Merges current list with passed args lists
         It is an improved version of the .extend method
@@ -254,7 +254,7 @@ class List(list):
 
         [self.extend(iterable) for iterable in args if isList(iterable)]
 
-    def including(self, obj: Union[List, list, set, tuple]):
+    def including(self, obj: Union[List, list, set, tuple]) -> Dictionary:
         """
         Converts current list and object passed list to Dictionary object
         It uses the zip method to convert to lists into an dictionary
