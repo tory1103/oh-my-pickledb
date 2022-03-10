@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh: long_description = fh.read(
 
 setuptools.setup(
     name="oh-my-pickledb",
-    version="0.4.2",
+    version="0.5-alpha",
     author="Adrián Toral",
     author_email="adriantoral@sertor.es",
     description="Oh-My-PickleDB is an open source key-value store using Python's json module",
