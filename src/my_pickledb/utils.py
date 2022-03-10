@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+from json import loads
+
 from pysem_converters import isJson, isList, json_to_xml, str_to_json, str_to_bytes, Union
 
 
@@ -391,3 +394,33 @@ class Load:
         """
 
         with open(self.__file, kwargs.get("mode", "r")) as f: return str_to_json(f.read()) if jsonify else f.read()
+
+
+def dsl_parser(data: str, separator: str = ":", arguments_separator: str = " "):
+    @dataclass
+    class dsl_t:
+        type: str
+        key: str
+        value: Union[str, int, float, list, dict]
+
+    try: arguments, value = data.split(separator)
+    except: raise Exception(f"""Separator missing\n{data}\n{" " * data.find(separator)}^^^^""")
+
+    try: value_type, key = arguments.strip().split(arguments_separator)
+    except: raise Exception(f"""Value type or key missing\n{data}\n{" " * data.find(arguments)}^^^^""")
+
+    value_type = value_type.lower()
+    value = value.strip()
+
+    try:
+        if value_type in ["integer", "int", "i"]: value = int(value)
+
+        elif value_type in ["float", "flt", "f"]: value = float(value)
+
+        elif value_type in ["string", "str", "s"]: value = str(value)
+
+        elif value_type in ["array", "arr", "a", "list", "l", "dictionary", "dict", "d", "json"]: value = loads(value)
+
+        return dsl_t(type(value), key, value)
+
+    except: raise Exception(f"""Type : {value_type} does not correspond with value""")

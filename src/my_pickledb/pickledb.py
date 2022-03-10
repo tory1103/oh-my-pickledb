@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 from pysem_converters import isBytes, bytes_to_json, bytes_to_str, Union
 
-from .utils import Dictionary, Load, Save
+from .utils import Dictionary, Load, Save, dsl_parser
 
 
 class PickleDB(Dictionary):
@@ -86,3 +86,24 @@ class DecryptPickleDB(PickleDB):
         if not encryption_token: raise Exception("Must have encryption token")
 
         super().__init__(file, **bytes_to_json(Fernet(encryption_token).decrypt(encryption)), **kwargs)
+
+
+class DSLPickleDB(PickleDB):
+    def __init__(self, file: str, dsl_separator: str = ":", dsl_arguments_separator: str = " ", **kwargs):
+        """
+        Creates a new PickleDB object
+        File parameter is the path from where you want to load and save pickledb dictionary
+
+        :param file:
+        :param kwargs:
+        """
+
+        try:
+            super().__init__(file, **kwargs)
+
+            with open(file, "r") as code:
+                for line in code.readlines():
+                    parsed_code = dsl_parser(line, dsl_separator, dsl_arguments_separator)
+                    self.set(parsed_code.key, parsed_code.value)
+
+        except TypeError: raise Exception("Loaded object must be PickleDB or dictionary type")
